@@ -24,128 +24,320 @@ function generatePortfolio(students, courses) {
         if (!studentData[`${students[i].getCapacity(studentsQuartile)}`]) studentData[`${students[i].getCapacity(studentsQuartile)}`] = [];
         studentData[`${students[i].getCapacity(studentsQuartile)}`].push(students[i]);
     }
+
     var student_capacity = Math.ceil(ca / sa);
-    console.log(courseData);
-    sortCourseData(student_capacity);
+    for(var i in courseData){
+        if(i == "undefined"){
+            delete courseData[i];
+        }else{
+        scoreDepartment(courseData[i]);
+        }
+    }
+    courseData  = sort2(courseData, student_capacity);
+   // sortCourseData(student_capacity);
 
-    console.log(courseData);
     assignCourses(student_capacity);
+    for(var i in studentData)
+        sortStudents(studentData[i]);
     console.log(studentData, courseData);
+    var rend = new Renderer(studentData);
 
-//   / new Renderer(studentData).drawJSON(studentData);
+    console.log("Results", studentData, courseData);
+
+    rend.sortStudents(studentData,5, (groups)=>{
+        var files = []
+        var csv_docs = (rend.groupsToCSV(groups));
+        var writer = new CSV_Writer();
+        for(var i in csv_docs){
+            console.log("wasup");
+            writer.writeFile(i, csv_docs[i], (link)=>{
+                console.log("Wasup");
+                files.push(link);
+                console.log(link);
+            });
+        }
+
+        console.log(courseData);
+        var left_over = "";
+        for(var i in courseData){
+            for(var j in courseData[i]){
+                left_over += j+"\n";
+                for(var a in courseData[i][j].courses){
+                    var cc = courseData[i][j].courses[a];
+                    left_over += `${cc.name},${cc.department},${cc.department},${cc.course_lead},${cc.score}\n`;
+                }
+            }
+            left_over += "\n";
+        }
+
+        writer.writeFile("unassigned_groups", left_over, (link)=>{
+            files.push(link);
+        });
+
+        window.setTimeout(()=>{
+            console.log(files);
+            var dwn = document.getElementById("downloader");
+            for(var a in files)
+                {
+                    dwn.href = files[a];
+                    dwn.click();
+                }
+        },50);
+
+    });
+
+}
+
+function sortStudents(students){
+    var courses = students;
+    courses.sort((a,b)=>{
+        if(a.load > b.load)
+            return 1;
+        else if(a.load < b.load);
+            return -1;
+        return 0;
+    });
+
+    var capacity = students;
+    capacity.sort((a,b)=>{
+        if(a.tickets > b.tickets)
+            return 1;
+        else if(a.tickets < b.tickets)
+            return -1;
+        return 0;
+    });
+
+    for(var i in courses){
+        capacity[i].courses = courses[i].courses;
+    }
+
+    students = capacity;
+}
+
+function scoreDepartment(department){
+
+    var score = 0;
+    for(var i in department.courses)
+        score += department.courses[i].score;
+    department.score = score;
 }
 
 function assignCourses(student_capacity) {
-    var t = 0;
-    var indexes = getIndexes(courseData);
-    var currentIndex = 0;
-    var t = 0;
-    var anythingGoes = false;
-    var last = {};
-    var studentIndexes = getIndexes(studentData);
-    studentIndexes.sort((a, b) => {
-        var a1 = parseInt(a);
-        var b1 = parseInt(b);
-        if (a1 > b1) return 1;
-        else if (b1 > a1) return -1;
+
+     var courseIndexes = getIndexes(courseData);
+     courseIndexes.sort(function(a,b){
+        var c = parseFloat(a);
+        var d = parseFloat(b);
+
+        if(c < d)
+            return -1;
+        else if(c > d)
+            return 1;
         return 0;
     });
-    for (var i in studentData) {
-        studentData[i].sort(
-            (a, b) => {
-                if (parseFloat(a.ticket_count) < parseFloat(b.ticket_count)) return -1;
-                else if (parseFloat(a.ticket_count) > parseFloat(b.ticket_count)) return 1;
-                return 0;
-            });
-    }
-    console.log(studentIndexes);
-    var currentStudent = 0;
-    var currentRange = 0;
-    var studentsFull = 0;
-    while (!last.error) {
-        var student = studentData[studentIndexes[currentRange]][currentStudent];
-        var tickets = [];
-        for (var i in studentData[studentIndexes[currentRange]]) tickets.push(parseInt(studentData[studentIndexes[currentRange]][i].ticket_count));
-        var quartile = new Quartile(tickets);
-        console.log(quartile.getFirstQuartile(), quartile.getMedian(), quartile.getThirdQuartile());
-        if (!student.full) {
-            var maxCapacity = (student_capacity * student.getCapacity());
-            console.log("---------", currentStudent);
-            last = grabCourse(maxCapacity - student.load, !(student.ticket_count >= quartile.getThirdQuartile));
-            if (!last.error) student.addDepartment(last);
-            else {
-                maxCapacity = (student_capacity * (student.getCapacity() + 0.5));
-                console.log(maxCapacity, student.load);
-                last = grabCourse(maxCapacity - student.load, !(student.ticket_count >= quartile.getThirdQuartile))
-                if (!last.error) student.addDepartment(last);
-
-                    else {
-                        student.full = true;
-                        last = {};
-                    }
-                    //studentData[studentIndexes[currentRange]].splice(studentData[studentIndexes[currentRange]].indexOf(student),1);
-
+    for (var i in courseIndexes) {
+        for (var j in courseData[courseIndexes[i]]) {
+            if (insertCourse(j, courseData[courseIndexes[i]][j], student_capacity)) {
+                delete courseData[courseIndexes[i]][j];
+                if (sizeOf(courseData[courseIndexes[i]]) <= 0)
+                    delete courseData[courseIndexes[i]];
+            }else{
+                var data = splitCourses(courseData[courseIndexes[i]][j].courses);
+                for(var x in data)
+                    insertCourse(x,data[x],student_capacity);
             }
-            (currentStudent < studentData[studentIndexes[currentRange]].length - 1) ? currentStudent++ : currentStudent = 0;
-            //console.log(last.score);
-            console.log("*********");
+
         }
-        else {
-            console.log("Student is full!", last);
-            studentsFull++;
-            if (studentsFull >= studentData[studentIndexes[currentRange]].length) {
-                currentRange++;
-                if (currentRange >= studentIndexes.length) last = {
-                    error: "Reached Last Slot"
-                }
-                currentStudent = 0;
-            }
-            else(currentStudent < studentData[studentIndexes[currentRange]].length - 1) ? currentStudent++ : currentStudent = 0;
-        }
+
     }
-    console.log(last.error);
+
+//    if(sizeOf(courseData) > 0){
+//
+//        assignCourses(student_capacity*1.5);
+//        //courseData = s;
+//    }
+
+    //console.log(totalCourses, totalStudents);
 }
 
-function grabCourse(capacity, lower) {
-    var selected = {
-        error: "Nothing Found!"
-        , capacity: capacity
-        , i: 0
-        , j: 0
-    };
-    for (var i in courseData) {
-        var found = false;
-        for (var j in courseData[i]) {
-            //console.log("Running...");
-            if (courseData[i][j].score <= capacity + 1.5) {
-                try {
-                    var sel = courseData[selected.i][selected.j];
-                    var qual = (!lower) ? (courseData[i][j].score > sel.score) : (courseData[i][j].score < sel.score)
-                    if (qual) {
-                        selected.i = i;
-                        selected.j = j;
-                        selected.error = "No Errors Found!";
-                    }
-                }
-                catch (e) {
-                    selected.i = i;
-                    selected.j = j;
-                    selected.error = "Could Not Find Value";
-                }
-            }
+function splitCourses(courses) {
+    //console.log(courses);
+    if(!courses)return{};
+    var split = Math.round(courses.length / 2);
+    var to = 0;
+    //console.log(split - 1, split);
+    var found = true;
+    while (courses[split].course_lead == courses[split - 1].course_lead && to < 1000) {
+        if (split != 1) split--;
+        else split = courses.length - 1;
+        to++;
+//        console.log(to, split - 1, split);
+        if (to > 999)
+        {
+            found = false;
+            console.warn("Loop exceeded maximium runtime");
         }
-        if (found) break;
     }
-    console.log(`Deleting: ${selected.j}`)
-    if (selected.j == 0) {
-        return selected;
+
+    var department = courses[0].department;
+    var nc = {};
+    if(!found){
+        nc[department] = {};
+        nc[department].courses = courses;
+        scoreDepartment(nc[department]);
+        return nc;
+    }
+
+    if (!courses[0].groupname) {
+        nc[`${department} (A)`] = {};
+        nc[`${department} (A)`].courses = courses.slice(0, split);
+        var score = 0;
+        for (var i in nc[`${department} (A)`].courses) {
+            nc[`${department} (A)`].courses[i].groupname = `${department} (A)`;
+            score += nc[`${department} (A)`].courses[i].score;
+            //console.log(nc[`${department} (A)`].courses[i].score)
+        }
+        nc[`${department} (A)`].score = score;
+        //console.log(nc[`${department} (A)`].score)
+        score = 0;
+        nc[`${department} (B)`] = {}
+        nc[`${department} (B)`].courses = courses.slice(split, courses.length);
+        for (var i in nc[`${department} (B)`].courses) {
+            nc[`${department} (B)`].courses[i].groupname = `${department} (B)`;
+            score += nc[`${department} (B)`].courses[i].score;
+        }
+        nc[`${department} (B)`].score = score;
+        score = 0;
     }
     else {
-        var sel = courseData[selected.i][selected.j];
-        delete courseData[selected.i][selected.j];
-        if (sizeOf(courseData[selected.i] <= 0)) delete courseData[selected.i];
-        return sel;
+        var Letter = (courses[0].groupname.match(/[(].[)]/g));
+        var ascii = (Letter[0].replace(/[(]|[)]/g, "").charCodeAt(0));
+        ascii += 1;
+        nc[courses[0].groupname] = {};
+        nc[courses[0].groupname].courses = courses.slice(0, split);
+        var score = 0;
+        for (var i in nc[courses[0].groupname].courses) {
+            nc[courses[0].groupname].courses[i].groupname = courses[0].groupname;
+            score += nc[courses[0].groupname].courses[i].score;
+            //console.log(nc[courses[0].groupname].courses[i].score)
+        }
+        nc[courses[0].groupname].score = score;
+        //console.log(nc[courses[0].groupname].score)
+        score = 0;
+        nc[`${department} (${String.fromCharCode(ascii)})`] = {}
+        nc[`${department} (${String.fromCharCode(ascii)})`].courses = courses.slice(split, courses.length);
+        for (var i in nc[`${department} (${String.fromCharCode(ascii)})`].courses) {
+            nc[`${department} (${String.fromCharCode(ascii)})`].courses[i].groupname = `${department} (${String.fromCharCode(ascii)})`;
+            score += nc[`${department} (${String.fromCharCode(ascii)})`].courses[i].score;
+        }
+        nc[`${department} (${String.fromCharCode(ascii)})`].score = score;
+        score = 0;
     }
+    //console.log(nc);
+    return (nc);
+}
+
+function getTotalCourses() {
+    var totalCourses = 0;
+    for (var i in courseData)
+        for (var j in courseData[i]) {
+            totalCourses++;
+        }
+    return totalCourses;
+}
+
+function getTotalStudents() {
+    var totalStudents = 0;
+    for (var i in studentData) totalStudents += studentData[i].length;
+    return totalStudents;
+}
+
+function insertCourse(name, course, student_capacity) {
+    console.log(name, course)
+    var indexes = getIndexes(studentData);
+    indexes.sort((a,b)=>{
+        var c = parseFloat(a);
+        var d = parseFloat(b);
+
+        if(c < d)
+            return -1;
+        else if(c > d)
+            return 1;
+        return 0;
+
+    });
+    var found = false;
+    var t = 0;
+    while(!found && t < 1000){
+        for (var i in indexes)
+            if (found) break;
+            else{
+                studentData[indexes[i]].sort((a,b)=>{
+                    if(a.ticket_count > b.ticket_count)
+                        return 1;
+                    else if (b.ticket_count > a.ticket_count)
+                        return -1;
+                    return 0;
+                });
+                for (var j in studentData[indexes[i]]) {
+                    var student = studentData[indexes[i]][j];
+                    var maxCapacity = ((student_capacity) * student.getCapacity());
+                    if(course.hopeless && maxCapacity < student_capacity) maxCapacity = student_capacity;
+                    if (course.score <= maxCapacity - student.load) {
+                        student.addDepartment(course,name);
+                        found = true;
+                        break;
+                    }
+                }
+            }
+        t++;
+        if(t > 999){
+            console.warn("This course is hopeless!");
+            var c = splitCourses(course.courses);
+            for(var i in c){
+                console.log("Splitting Course\n",name)
+                c[i].hopeless = true;
+                console.log(c[i].score);
+                insertCourse(i,c[i], student_capacity);
+                return true;
+            }
+        }
+    }
+
+    if(found && course.hopeless)console.log("THERE IS HOPE!\n",name);
+
+    return found;
+}
+
+function grabCourse(capacity) {}
+
+function sort2(course_data,student_capacity){
+    var temp = {};
+    for(var i in course_data){
+        if(course_data[i].score > student_capacity){
+            var groups = splitCourses(course_data[i].courses)
+            for(var a in groups){
+                temp[a] = groups[a];
+            }
+        }else
+            temp[i] = course_data[i];
+    }
+
+    var courseLoads = [2,1.5,1,0.5];
+    var newCourseData = {};
+    for(var i in courseLoads){
+        for(var j in temp)
+            if(temp[j].score > student_capacity*courseLoads[i]){
+                if(!newCourseData[courseLoads[i]]){
+                    newCourseData[courseLoads[i]] = {}
+                };
+                newCourseData[courseLoads[i]][j] = temp[j];
+                //newCourseData[courseLoads[i]].length++;
+                delete temp[j];
+            }
+    }
+    //console.log(newCourseData);
+    return newCourseData;
 }
 
 function sortCourseData(student_capacity) {
@@ -155,31 +347,33 @@ function sortCourseData(student_capacity) {
         var split = false;
         var current = 0;
         var tab;
-        for (var j in courseData[i].courses) {
-            if (!last) last = j;
-            var append = " (" + String.fromCharCode(65 + current) + ")";
-            score += courseData[i].courses[j].getScore();
-            if (split) {
-                if (!(courseData[i + append])) {
-                    courseData[i + append] = {
-                        score: 0
-                        , courses: []
-                    };
+        if (i != "undefined")
+            for (var j in courseData[i].courses) {
+                if (!last) last = j;
+                var append = " (" + String.fromCharCode(65 + current) + ")";
+                score += courseData[i].courses[j].getScore();
+                if (split) {
+                    if (!(courseData[i + append])) {
+                        courseData[i + append] = {
+                            score: 0
+                            , courses: []
+                        };
+                    }
+                    courseData[i + append].courses.push(courseData[i].courses[j]);
+                    //courseData[i].courses.splice(courseData[i].courses.indexOf(courseData[i].courses[j],1));
                 }
-                courseData[i + append].courses.push(courseData[i].courses[j]);
-                //courseData[i].courses.splice(courseData[i].courses.indexOf(courseData[i].courses[j],1));
-            }
-            if (score > student_capacity*1.5 && !split && courseData[i].courses[last].course_lead != courseData[i].courses[j].course_lead) {
-                if (!(courseData[i].courses.length - parseInt(j) < student_capacity * .5)) {
-                    courseData[i].score = score;
-                    split = true;
-                    score = 0;
-                    current++;
-                    tab = j;
+                // console.log(i, courseData[i].courses[last], last);
+                if (score > student_capacity / 2 && !split && courseData[i].courses[last].course_lead != courseData[i].courses[j].course_lead) {
+                    if (!(courseData[i].courses.length - parseInt(j) < student_capacity * .5)) {
+                        courseData[i].score = score;
+                        split = true;
+                        score = 0;
+                        current++;
+                        tab = j;
+                    }
                 }
+                last = j;
             }
-            last = j;
-        }
         if (!split) courseData[i].score = score;
         else {
             courseData[i + append].score = score;
@@ -199,7 +393,7 @@ function sortCourseData(student_capacity) {
     var courseLoads = [2, 1.5, 1, .5];
     for (var i in courseLoads) {
         data[courseLoads[i]] = {};
-        console.log("Data: ", data);
+        //console.log("Data: ", data);
         for (var j in courseData) {
             if (j != "undefined") {
                 if (courseData[j].score >= student_capacity * courseLoads[i]) {
@@ -210,7 +404,7 @@ function sortCourseData(student_capacity) {
         }
     }
     courseData = data;
-    console.log("COURSE DATA", student_capacity);
+    //console.log("COURSE DATA", student_capacity);
 }
 
 function sizeOf(object) {
