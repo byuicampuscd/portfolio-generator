@@ -143,12 +143,12 @@
 
         render: function () {
             return (
-                <div id="portfolio">
+                <div id="portfoliomain">
                     <h1>Portfolio Generator</h1>
-                    <Options />
                     <Inputs />
                     <LoadPortfolio prevPortfolio = { this.state.portfolio } />
                     <div id="portfolioOutput"></div>
+                    <Options />
                 </div>
             );
         }

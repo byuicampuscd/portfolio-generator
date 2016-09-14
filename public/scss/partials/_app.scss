@@ -1,0 +1,39 @@
+main#app {
+    font-family: Helvetica, Arial, "Century Gothic", sans-serif;
+    font-weight: 100;
+    & > div {
+        margin-top: 20px;
+        margin-left: 150px;
+        & > div {
+            margin-bottom: 15px;
+        }
+    }
+    #portfolio {
+        box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.3);
+        background-color: #aed3f4;
+        margin-bottom: 20px;
+    }
+    #options {
+        position: absolute;
+        top: 25%;
+        left: 35%;
+        background-color: #aed3f4;
+        box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.3);
+        padding: 10px;
+        & > label {
+            display: block;
+            margin-bottom: 10px;
+        }
+    }
+    label > label {
+        margin-left: 5px;
+    }
+}
+
+nav {
+    margin-top: 50px;
+    margin-left: 150px;
+    & > button {
+        padding: 2.5px;
+    }
+}
