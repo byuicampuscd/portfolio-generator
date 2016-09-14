@@ -44,7 +44,7 @@ function generatePortfolio(students, courses) {
 
     console.log("Results", studentData, courseData);
 
-    rend.sortStudents(studentData,5, (groups)=>{
+    rend.sortManual(studentData,5, (groups)=>{
         var files = []
         var csv_docs = (rend.groupsToCSV(groups));
         var writer = new CSV_Writer();
