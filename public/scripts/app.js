@@ -1,22 +1,28 @@
-(function() {
+(function () {
 
     var LoadPortfolio = React.createClass({
 
-        loadNewPortfolio: function(e) {
+        loadNewPortfolio: function (e) {
             document.querySelector("#portfolioOutput").innerHTML = "<h1>New Portfolio!</h1>";
         },
 
-        loadPreviousPortfolio: function(e) {
+        loadPreviousPortfolio: function (e) {
             document.querySelector("#portfolioOutput").innerHTML = "<h1>Old portofolio!</h1>";
         },
 
-        render: function() {
-            return (
-                <div id="portfolio">
-                    <h2>Portfolio</h2>
-                    <input type="button" value="Load New Portfolio?" onClick={ this.loadNewPortfolio } />
-                    <input type="button" value="Load Previously Made Portfolio?" onClick={ this.loadPreviousPortfolio } />
-                </div>
+        render: function () {
+            return ( < div id = "portfolio" >
+                < h2 > Portfolio < /h2> < input type = "button"
+                value = "Load New Portfolio?"
+                onClick = {
+                    this.loadNewPortfolio
+                }
+                /> < input type = "button"
+                value = "Load Previously Made Portfolio?"
+                onClick = {
+                    this.loadPreviousPortfolio
+                }
+                /> < /div>
             );
         }
 
@@ -24,56 +30,51 @@
 
     var Options = React.createClass({
 
-        render: function() {
-            return (
-                <div id="options">
-                    <h2>Options</h2>
+        render: function () {
+            return ( < div id = "options" >
+                < h2 > Options < /h2>
 
-                    <label>
-                        Sections Column <input type="text" />
-                        <label>
-                            End Column? <input type="checkbox" />
-                        </label>
-                    </label>
+                < label >
+                Sections Column < input type = "text" / >
+                < label >
+                End Column ? < input type = "checkbox" / >
+                < /label> < /label>
 
-                    <label>
-                        Tickets Column <input type="text" />
-                        <label>
-                            End Column? <input type="checkbox" />
-                        </label>
-                    </label>
+                < label >
+                Tickets Column < input type = "text" / >
+                < label >
+                End Column ? < input type = "checkbox" / >
+                < /label> < /label>
 
-                    <label>
-                        Student Column <input type="text" />
-                        <label>
-                            End Column? <input type="checkbox" />
-                        </label>
-                    </label>
+                < label >
+                Student Column < input type = "text" / >
+                < label >
+                End Column ? < input type = "checkbox" / >
+                < /label> < /label>
 
-                    <label>
-                        Shifts <input type="number" />
-                    </label>
+                < label >
+                Shifts < input type = "number" / >
+                < /label>
 
-                    <h3>Sections</h3>
+                < h3 > Sections < /h3>
 
-                    <label>
-                        Larger Course Weight <input type="number" />
-                    </label>
+                < label >
+                Larger Course Weight < input type = "number" / >
+                < /label>
 
-                    <label>
-                        Smaller Course Weight <input type="number" />
-                    </label>
+                < label >
+                Smaller Course Weight < input type = "number" / >
+                < /label>
 
-                    <h3>Tickets</h3>
+                < h3 > Tickets < /h3>
 
-                    <label>
-                        Larger Course Weight <input type="number" />
-                    </label>
+                < label >
+                Larger Course Weight < input type = "number" / >
+                < /label>
 
-                    <label>
-                        Smaller Course Weight <input type="number" />
-                    </label>
-                </div>
+                < label >
+                Smaller Course Weight < input type = "number" / >
+                < /label> < /div>
             );
         }
 
@@ -81,7 +82,7 @@
 
     var Inputs = React.createClass({
 
-        useFile: function(e) {
+        useFile: function (e) {
             var input = e.target,
                 file = input.files[0],
                 reader = new FileReader(),
@@ -89,7 +90,7 @@
 
             reader.readAsText(file);
 
-            reader.onload = function(){
+            reader.onload = function () {
                 var text = reader.result;
 
                 node.innerText = text;
@@ -103,57 +104,65 @@
             };
         },
 
-        render: function() {
-            return (
-                <div id="inputs">
-                    <h2>Inputs</h2>
-                    <input onChange={ this.useFile } type="file" id="file1" />
-                    <input onChange={ this.useFile } type="file" id="file2" />
-                </div>
+        render: function () {
+            return ( < div id = "inputs" >
+                < h2 > Inputs < /h2> < input onChange = {
+                    this.useFile
+                }
+                type = "file"
+                id = "file1" / >
+                < input onChange = {
+                    this.useFile
+                }
+                type = "file"
+                id = "file2" / >
+                < /div>
             );
         }
 
     });
 
-  var App = React.createClass({
+    var App = React.createClass({
 
-        getInitialState: function() {
+        mixins: [ReactFireMixin],
+
+        getInitialState: function () {
             return {
                 loaded: false
             }
         },
 
-        handleDataLoaded: function() {
+        handleDataLoaded: function () {
             this.setState({
                 loaded: true
             });
         },
 
-        componentWillMount: function() {
+        componentWillMount: function () {
 
-            var portfolioRef = database.ref('portfolio')
+            var users = database.ref('users');
 
-            portfolioRef.on("value", snap => {
-                var portfolio = snap.val();
-                this.state.portfolio = portfolio;
-            });
+            this.bindAsObject(users, 'users');
 
-            portfolioRef.on('value', this.handleDataLoaded);
+            users.on("value", this.handleDataLoaded);
+
+            console.log(this);
         },
 
         render: function () {
-            return (
-                <div id="portfoliomain">
-                    <h1>Portfolio Generator</h1>
-                    <Inputs />
-                    <LoadPortfolio prevPortfolio = { this.state.portfolio } />
-                    <div id="portfolioOutput"></div>
-                    <Options />
-                </div>
+            return ( < div id = "portfolioMain" >
+                        <header>
+                            < h1 > Portfolio Generator < /h1>
+                            < Inputs / >
+                        </header>
+                        < LoadPortfolio prevPortfolio = { this.state.portfolio } />
+                        < div id = "portfolioOutput" > < /div>
+                        < Options / >
+                    < /div>
             );
         }
     });
 
-    ReactDOM.render( <App /> , document.querySelector("#app"));
+    ReactDOM.render( < App / > , document.querySelector("#app"));
 
 }());
