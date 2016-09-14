@@ -8,14 +8,26 @@ main#app {
             margin-bottom: 15px;
         }
     }
-    #portfolio {
-        position: absolute;
+    header {
         padding: 20px;
+        box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.3);
+        background-color: #aed3f4;
+        margin-bottom: 20px;
+        width: 600px;
+        input {
+            margin-bottom: 20px;
+        }
+    }
+    #portfolio {
+        display: none;
+        padding: 20px;
+        width: 600px;
         box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.3);
         background-color: #aed3f4;
         margin-bottom: 20px;
     }
     #options {
+        display: none;
         position: absolute;
         top: 25%;
         left: 35%;
@@ -24,7 +36,7 @@ main#app {
         padding: 20px;
         & > label {
             display: block;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
     }
     label > label {

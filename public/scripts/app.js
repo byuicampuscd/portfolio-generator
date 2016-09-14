@@ -11,24 +11,32 @@
         },
 
         render: function () {
-            return ( < div id = "portfolio" >
-                < h2 > Portfolio < /h2> < input type = "button"
-                value = "Load New Portfolio?"
-                onClick = {
-                    this.loadNewPortfolio
-                }
-                /> < input type = "button"
-                value = "Load Previously Made Portfolio?"
-                onClick = {
-                    this.loadPreviousPortfolio
-                }
-                /> < /div>
+            return ( <div id = "portfolio" >
+                        < h2 > Portfolio < /h2>
+                        < input type = "button"
+                                value = "Load New Portfolio?"
+                                onClick = {
+                                    this.loadNewPortfolio
+                                }
+                        /> < input type = "button"
+                                    value = "Load Previously Made Portfolio?"
+                                    onClick = {
+                                        this.loadPreviousPortfolio
+                                    }
+                        />
+                    </div>
             );
         }
 
     });
 
     var Options = React.createClass({
+
+        closeModal: function(e) {
+            var parent = e.target.parentElement;
+
+            parent.style.display = "none";
+        },
 
         render: function () {
             return ( < div id = "options" >
@@ -74,13 +82,31 @@
 
                 < label >
                 Smaller Course Weight < input type = "number" / >
-                < /label> < /div>
+                < /label>
+
+                <input value="Close" onClick={this.closeModal} type="button" />
+
+                < /div>
             );
         }
 
     });
 
     var Inputs = React.createClass({
+
+        display: function(role) {
+            if (role) {
+                return {"display": "block"};
+            } else {
+                return {"display": "none"};
+            }
+        },
+
+        showOptionsModal: function(e) {
+            var options = document.querySelector("#options");
+
+            options.style.display = "block";
+        },
 
         useFile: function (e) {
             var input = e.target,
@@ -106,17 +132,11 @@
 
         render: function () {
             return ( < div id = "inputs" >
-                < h2 > Inputs < /h2> < input onChange = {
-                    this.useFile
-                }
-                type = "file"
-                id = "file1" / >
-                < input onChange = {
-                    this.useFile
-                }
-                type = "file"
-                id = "file2" / >
-                < /div>
+                        <h2> Inputs </h2>
+                        <input onChange = { this.useFile } type = "file" id = "file1" / >
+                        <input onChange = { this.useFile } type = "file" id = "file2" / >
+                        <input style={ this.display(this.props.role) } onClick = { this.showOptionsModal } type = "button" value="Show Options" / >
+                    < /div>
             );
         }
 
@@ -150,10 +170,21 @@
         },
 
         render: function () {
+
+            var role,
+                users = this.state.users;
+
+            for (var i in users) {
+                var user = users[i];
+                if (typeof user === "object" && user.role === 10) {
+                    role = user.role;
+                }
+            }
+
             return ( < div id = "portfolioMain" >
                         <header>
-                            < h1 > Portfolio Generator < /h1>
-                            < Inputs / >
+                            <h1> Portfolio Generator </h1>
+                            <Inputs role = { role } />
                         </header>
                         < LoadPortfolio prevPortfolio = { this.state.portfolio } />
                         < div id = "portfolioOutput" > < /div>
