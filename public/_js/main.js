@@ -1,11 +1,10 @@
-var sectionLists;
-var ticketLists;
-var studentsList;
+var sectionLists,
+    ticketLists,
+    studentsList;
 
-var sectionsQuartile;
-var ticketsQuartile;
-var studentsQuartile;
-
+var sectionsQuartile,
+    ticketsQuartile,
+    studentsQuartile;
 
 var options = {
     sectionsColumn : "Sections",
@@ -15,16 +14,12 @@ var options = {
 
 };
 
-
-var sectionReader = new CSV_Reader("section",data=>{sectionLists = data; check();},2);
-var studentReader = new CSV_Reader("student",data=>{studentsList = data; check();},0);
-var ticketReader = new CSV_Reader("tickets",data=> {ticketLists = data; check();},0);
-
-
+var sectionReader = new CSV_Reader("section",data=>{sectionLists = data; check();},2),
+    studentReader = new CSV_Reader("student",data=>{studentsList = data; check();},0),
+    ticketReader = new CSV_Reader("tickets",data=> {ticketLists = data; check();},0);
 
 function check(){
-    if(sectionLists && ticketLists &&  studentsList)
-        buildQuartiles();
+    if(sectionLists && ticketLists &&  studentsList) buildQuartiles();
 }
 
 function buildQuartiles(){
@@ -49,8 +44,6 @@ function buildQuartiles(){
 
     sectionsQuartile = (new Quartile(sections));
 
-
-
     //students quartile
     var students = [];
     for(var i in studentsList){
@@ -63,7 +56,6 @@ function buildQuartiles(){
     }
 
     studentsQuartile = (new Quartile(students));
-
 
     rankData();
 
@@ -87,14 +79,6 @@ function rankData(){
         students.push(new Student(i,studentsList[i]["Full Time Weight"], studentsList[i][options.studentColumn]));
     }
 
-
-
     generatePortfolio(students,courses);
 
 }
-
-
-
-
-
-
