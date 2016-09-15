@@ -46,6 +46,15 @@ main#app {
     label > label {
         margin-left: 5px;
     }
+    #portfolioOutput {
+        #teamcontainer {
+            background-color: #8ba8c3;
+            margin-bottom: 40px;
+            & > div {
+                background-color: #b1d6f9;
+            }
+        }
+    }
 }
 
 nav {
