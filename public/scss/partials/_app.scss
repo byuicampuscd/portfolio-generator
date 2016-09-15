@@ -61,16 +61,22 @@ main#app {
         }
         #studentContainer {
             width: 300px;
-            & > div {
-                display: flex;
-                flex-direction: row;
-                flex-wrap: nowrap;
-                margin-bottom: 20px;
-            }
-        }
-        .courseContainer {
             background-color: #8ba8c3;
-            padding: 15px;
+            & > div {
+                width: 40%;
+                flex-direction: row;
+                flex-wrap: wrap;
+                position: absolute;
+                margin-bottom: 20px;
+                background-color: #565a5d;
+                input {
+                    width: 50px;
+                    height: 20px;
+                }
+            }
+            .courseContainer {
+                padding: 15px;
+            }
         }
     }
 }

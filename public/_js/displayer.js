@@ -16,7 +16,16 @@ function checkImg(studentname, img) {
 }
 
 function displayCourseAssignment(courseDataInfo, studentContainer, coursesCont) {
-    var courses = courseDataInfo.courses;
+    var courses = courseDataInfo.courses,
+        closeButton = $('<input type="button" value="close">');
+
+    closeButton.click(e => {
+        var parent = e.target.parentElement;
+
+        $(parent).css({
+            display: "none",
+        })
+    })
 
     for (var i = 0; i < courses.length; i++) {
         var courseLead = $(`<p>Course Lead: ${courses[i]['course_lead']}</p>`),
@@ -42,6 +51,8 @@ function displayCourseAssignment(courseDataInfo, studentContainer, coursesCont) 
         studentContainer
             .append(coursesCont);
     }
+
+    coursesCont.append(closeButton);
 }
 
 function hiderShower(ele) {
@@ -51,6 +62,7 @@ function hiderShower(ele) {
         })
         .click(e => {
             var target = e.target.nextElementSibling,
+                id = e.target.parentElement.id,
                 show = target.getAttribute("data-show");
 
             if (show === "false") {
