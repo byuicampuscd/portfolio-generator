@@ -34,7 +34,6 @@
 
         closeModal: function(e) {
             var parent = e.target.parentElement;
-
             parent.style.display = "none";
         },
 
@@ -104,37 +103,15 @@
 
         showOptionsModal: function(e) {
             var options = document.querySelector("#options");
-
             options.style.display = "block";
-        },
-
-        useFile: function (e) {
-            var input = e.target,
-                file = input.files[0],
-                reader = new FileReader(),
-                node = document.getElementById('portfolioOutput');
-
-            reader.readAsText(file);
-
-            reader.onload = function () {
-                var text = reader.result;
-
-                node.innerText = text;
-
-                database.ref('portfolio').set({
-                    "data": text
-                });
-
-                console.log("File Info: ", file);
-                console.log("File Preview: ", reader.result.substring(0, 200));
-            };
         },
 
         render: function () {
             return ( < div id = "inputs" >
                         <h2> Inputs </h2>
-                        <input onChange = { this.useFile } type = "file" id = "file1" / >
-                        <input onChange = { this.useFile } type = "file" id = "file2" / >
+                        <label>Section CSV <input type = "file" id = "section" / ></label>
+                        <label>Tickets CSV <input type = "file" id = "tickets" / ></label>
+                        <label>Student CSV <input type = "file" id = "student" / ></label>
                         <input style={ this.display(this.props.role) } onClick = { this.showOptionsModal } type = "button" value="Show Options" / >
                     < /div>
             );
@@ -159,14 +136,9 @@
         },
 
         componentWillMount: function () {
-
             var users = database.ref('users');
-
             this.bindAsObject(users, 'users');
-
             users.on("value", this.handleDataLoaded);
-
-            console.log(this);
         },
 
         render: function () {
