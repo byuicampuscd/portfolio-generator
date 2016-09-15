@@ -21,12 +21,18 @@ function displayCourseAssignment(courseDataInfo, studentContainer) {
     for (var i = 0; i < courses.length; i++) {
         var courseLead = $(`<p>${courses[i]['course_lead']}</p>`),
             department = $(`<p>${courses[i].department}</p>`),
-            courseName = $(`<p>${courses[i].name}</p>`);
+            courseName = $(`<p>${courses[i].name}</p>`),
+            courseContainer = $("<div></div>");
 
-        studentContainer
+        courseContainer.attr("class", "courseContainer");
+
+        courseContainer
             .append(department)
             .append(courseName)
             .append(courseLead);
+
+        studentContainer
+            .append(courseContainer);
     }
 }
 
