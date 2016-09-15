@@ -13,13 +13,12 @@ main#app {
         box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.3);
         background-color: #aed3f4;
         margin-bottom: 20px;
-        width: 600px;
         input {
             margin-bottom: 20px;
         }
     }
     #portfolioMain {
-        width: 600px;
+        width: 70%;
     }
     #portfolio {
         display: none;
@@ -53,8 +52,20 @@ main#app {
             box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.3);
             padding: 15px;
             & > div {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
                 background-color: #b1d6f9;
                 padding: 15px;
+            }
+        }
+        #studentContainer {
+            width: 300px;
+            & > div {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: nowrap;
+                margin-bottom: 20px;
             }
         }
         .courseContainer {

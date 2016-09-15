@@ -22,7 +22,7 @@ function displayCourseAssignment(courseDataInfo, studentContainer, coursesCont) 
         var courseLead = $(`<p>Course Lead: ${courses[i]['course_lead']}</p>`),
             department = $(`<p>Department: ${courses[i].department}</p>`),
             courseName = $(`<p>Course Name: ${courses[i].name}</p>`),
-            courseContainer = $("<div id='courseContainer'></div>");
+            courseContainer = $("<div></div>");
 
         courseContainer
             .attr("class", "courseContainer");
@@ -56,7 +56,7 @@ function hiderShower(ele) {
             if (show === "false") {
                 $(target)
                     .css({
-                        "display": "block"
+                        "display": "flex"
                     })
                     .attr("data-show", "true");
             } else if (show === "true") {
@@ -144,6 +144,8 @@ function displayer(groups) {
     }
 
     $("#portfolioOutput").append(container);
+
+    return;
 
     //    database.ref('portfolio/data').set(groups);
 

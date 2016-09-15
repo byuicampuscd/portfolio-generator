@@ -109,9 +109,9 @@
         render: function () {
             return ( < div id = "inputs" >
                         <h2> Inputs </h2>
-                        <label>Section Data CSV <input type = "file" id = "section" / ></label>
-                        <label>Tickets Data CSV <input type = "file" id = "tickets" / ></label>
-                        <label>Student Profile Data CSV <input type = "file" id = "student" / ></label>
+                        <label>Section Data CSV (Course Variant) <input type = "file" id = "section" / ></label>
+                        <label>Tickets Data CSV (Student Profiling) <input type = "file" id = "tickets" / ></label>
+                        <label>Student Data CSV (Student Rank) <input type = "file" id = "student" / ></label>
                         <input style={ this.display(this.props.role) } onClick = { this.showOptionsModal } type = "button" value="Show Options" / >
                     < /div>
             );
