@@ -62,22 +62,11 @@ function hiderShower(ele) {
         })
         .click(e => {
             var target = e.target.nextElementSibling,
-                id = e.target.parentElement.id,
-                show = target.getAttribute("data-show");
-
-            if (show === "false") {
-                $(target)
-                    .css({
-                        "display": "flex"
-                    })
-                    .attr("data-show", "true");
-            } else if (show === "true") {
-                $(target)
-                    .css({
-                        "display": "none"
-                    })
-                    .attr("data-show", "false");
-            }
+                id = e.target.parentElement.id;
+            $(target)
+                .css({
+                    "display": "flex"
+                })
         });
 }
 
@@ -106,10 +95,18 @@ function displayTeam(students, teamContainer, group) {
 
     teamContainer.append(group);
 
-    var oneContainerToRuleThemAll = $("<div></div>");
+    var oneContainerToRuleThemAll = $("<div></div>"),
+        closeButton = $('<input type="button" value="close">');
+
+    closeButton.click(e => {
+        var parent = e.target.parentElement;
+
+        $(parent).css({
+            display: "none",
+        })
+    })
 
     oneContainerToRuleThemAll
-        .attr("data-show", "false")
         .css({
             display: "none"
         });
@@ -133,6 +130,8 @@ function displayTeam(students, teamContainer, group) {
 
         if (studentname !== "size") oneContainerToRuleThemAll.append(studentContainer);
     }
+
+    oneContainerToRuleThemAll.append(closeButton);
 
     teamContainer.append(oneContainerToRuleThemAll);
 }
