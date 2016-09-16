@@ -1,4 +1,5 @@
 @import './partials/_app.scss';
+@import 'https://fonts.googleapis.com/css?family=Merriweather|Open+Sans';
 
 * {
     box-sizing: border-box;
@@ -7,12 +8,12 @@
 }
 
 h1, h2, h3, h4, h5, h6, h7 {
-    font-family: "Helvetica", "Century Gothic", sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-weight: 100;
 }
 
 p, label {
-    font-family: Cambria, Georgia, Palatino, serif;
+    font-family: 'Merriweather', serif;
     font-weight: 100;
 }
 

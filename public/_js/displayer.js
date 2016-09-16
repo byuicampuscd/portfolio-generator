@@ -78,7 +78,7 @@ function addInfo(student, studentContainer) {
             name = i,
             courseDataInfo = courseAssignment[i],
             coursesCont = $("<div></div>"),
-            headerName = $(`<h3>${name} (Click)</h3>`);
+            headerName = $(`<h3>${name} &cudarrr;</h3>`);
 
         hiderShower(headerName);
 
@@ -145,7 +145,7 @@ function displayer(groups) {
     for (var i in groups) {
         var students = groups[i],
             teamContainer = $('<div id="teamcontainer"></div>'),
-            group = $(`<h2>${i} (Click)</h2>`);
+            group = $(`<h2>${i} &cudarrr;</h2>`);
 
         hiderShower(group);
 
