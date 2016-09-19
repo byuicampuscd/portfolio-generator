@@ -93,6 +93,11 @@
 
     var Inputs = React.createClass({
 
+        fileUpload: function(e) {
+            var fileText = document.createTextNode(" File Attached")
+            e.target.parentElement.appendChild(fileText);
+        },
+
         display: function(role) {
             if (role) {
                 return {"display": "block"};
@@ -109,9 +114,9 @@
         render: function () {
             return ( < div id = "inputs" >
                         <h2> Inputs </h2>
-                        <label>Section Data CSV (Course Variant) <input type = "file" id = "section" / ></label>
-                        <label>Tickets Data CSV (Student Profiling) <input type = "file" id = "tickets" / ></label>
-                        <label>Student Data CSV (Student Rank) <input type = "file" id = "student" / ></label>
+                        <label className="custom-file-upload">Section Data CSV (Course Variant)<input onChange = { this.fileUpload } type = "file" id = "section" / ></label>
+                        <label className="custom-file-upload">Tickets Data CSV (Student Profiling) <input onChange = { this.fileUpload } type = "file" id = "tickets" / ></label>
+                        <label className="custom-file-upload">Student Data CSV (Student Rank) <input onChange = { this.fileUpload } type = "file" id = "student" / ></label>
                         <input style={ this.display(this.props.role) } onClick = { this.showOptionsModal } type = "button" value="Show Options" / >
                     < /div>
             );

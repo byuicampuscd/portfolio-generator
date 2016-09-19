@@ -78,7 +78,7 @@ function addInfo(student, studentContainer) {
             name = i,
             courseDataInfo = courseAssignment[i],
             coursesCont = $("<div></div>"),
-            headerName = $(`<h3>${name} &cudarrr;</h3>`);
+            headerName = $(`<h3>${name}</h3>`);
 
         hiderShower(headerName);
 
@@ -91,12 +91,16 @@ function addInfo(student, studentContainer) {
     }
 }
 
-function displayTeam(students, teamContainer, group) {
+function displayTeam(students, teamContainer, group, dropdownArrow) {
 
     teamContainer.append(group);
 
     var oneContainerToRuleThemAll = $("<div></div>"),
         closeButton = $('<input type="button" value="close">');
+
+    dropdownArrow.attr("id", "dropArrowMain");
+
+    teamContainer.append(dropdownArrow);
 
     closeButton.click(e => {
         var parent = e.target.parentElement;
@@ -138,18 +142,17 @@ function displayTeam(students, teamContainer, group) {
 
 function displayer(groups) {
 
-    console.log(groups)
-
     var container = $('<div id="container"></div>')
 
     for (var i in groups) {
         var students = groups[i],
             teamContainer = $('<div id="teamcontainer"></div>'),
-            group = $(`<h2>${i} &cudarrr;</h2>`);
+            dropdownArrow = $('<div></div>'),
+            group = $(`<h2>${i}</h2>`);
 
-        hiderShower(group);
+        hiderShower(dropdownArrow);
 
-        displayTeam(students, teamContainer, group);
+        displayTeam(students, teamContainer, group, dropdownArrow);
 
         container.append(teamContainer);
     }
