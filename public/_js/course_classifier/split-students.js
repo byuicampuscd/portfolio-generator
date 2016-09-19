@@ -43,7 +43,7 @@ Renderer.prototype.sortStudents = (students, groups, callback) => {
         t = 0;
         for (var i in students)
             for (var j in students[i]) {
-                if (injectStudent(students[i][j], data)) {
+                if (this.injectStudent(students[i][j], data)) {
                     students[i].splice(students[i].indexOf(students[i][j]), 1);
                     tick++;
                 }
@@ -61,7 +61,10 @@ Renderer.prototype.sortStudents = (students, groups, callback) => {
     console.log(shifts);
     callback(shifts);
 
-    function injectStudent(student, data) {
+
+}
+
+Renderer.prototype.injectStudent = function injectStudent(student, data) {
         var op = getIndexes(shifts);
         var added = false;
         if (!student.capacity) student.capacity = 10;
@@ -88,36 +91,101 @@ Renderer.prototype.sortStudents = (students, groups, callback) => {
         if (!added) console.log(limit);
         return added;
     }
+
+Renderer.prototype.sortManual =(students, groups, callback)=> {
+    var manual = {
+        "Group 1":{
+            'Matt Jones (FT)':{},
+            'Sara Balter (FT)':{},
+            'Annie Chambers':{},
+            'Matt Wyndham (FT)':{},
+            'Jing Song Huang':{},
+            'Jared Moreno (FT)':{},
+            'Camille Stiles':{}
+        },
+        "Group 3":{
+            "Mackenzy Taylor":{},
+            "Scott O'Neal":{},
+            "Seth Childers":{},
+            "Jason Braithwaite":{},
+            "Katy Kempton":{},
+            "Felipe Chora":{},
+            "Ashwini Krishnan":{},
+            "Megan Cottam":{},
+            "Seth Benson":{},
+            "Emily Gailbraith":{}
+        },
+        "Group 2":{
+            "Johnna Franks":{},
+            "Hannah Spear":{},
+            "Taylor Scott":{},
+            "JJ Aragon":{},
+            "Nate Hjorth":{},
+            "Jonathan Manoa":{},
+        },
+        group4:{
+            "Juan Alvarez":{},
+            "Oaklie Wayman":{},
+            "Jacob Patterson":{},
+            "Austin Swenson":{},
+            "Richlue Kpakor":{},
+            "Cole Herrin":{}
+        },
+        group5:{
+            "Juan Alvarez":{},
+            "Hannah Spear":{},
+            "Nate Hjorth":{},
+            "Jared Moreno":{},
+            "Jason Haung":{}
+        }
+
+
+    }
+
+    for (var i in students){
+        for(var j in students[i]){
+            var found = false;
+            for(var a in manual)
+                if(students[i][j].name in manual[a]){
+                    manual[a][students[i][j].name] =students[i][j];
+                }else{
+                    console.log(students[i][j].name +" is not in " + manual[a])
+                }
+        }
+    }
+
+    console.log(manual)
+
+   callback(manual);
 }
+
+
 var CSV = function CSV() {
     this.csv = "";
 };
 CSV.prototype.addLine = (text) => {
-    if(!this.csv)this.csv = "";
+    if (!this.csv) this.csv = "";
     this.csv += text + "\n";
 }
 CSV.prototype.addItem = (item) => {
-    if(!this.csv)this.csv = "";
+    if (!this.csv) this.csv = "";
     this.csv += item + ",";
 }
 CSV.prototype.endLine = () => {
-    if(!this.csv)this.csv = "";
+    if (!this.csv) this.csv = "";
     this.csv += "\n";
     //console.log(this.csv);
 }
-CSV.prototype.getCSV =()=>{
-    if(!this.csv)this.csv = "";
+CSV.prototype.getCSV = () => {
+    if (!this.csv) this.csv = "";
     return this.csv;
 }
-CSV.prototype.clear = ()=>{
+CSV.prototype.clear = () => {
     this.csv = "";
-
 }
-
 Renderer.prototype.groupsToCSV = function (groups) {
         var csvs = {};
         console.log(groups);
-
         for (var i in groups) {
             console.log(i);
             var csvFile = new CSV();
@@ -135,18 +203,17 @@ Renderer.prototype.groupsToCSV = function (groups) {
                             csvFile.addItem(groups[i][j].courses[a].courses[b].name);
                             csvFile.endLine();
                         }
-                         //console.log("Running", a, csvFile.getCSV());
-                         csvFile.endLine();
+                        //console.log("Running", a, csvFile.getCSV());
+                        csvFile.endLine();
                     }
                 }
             }
             //console.log(csvFile.getCSV());
             console.log(i);
-
-            csvs[i]= csvFile.getCSV();
+            csvs[i] = csvFile.getCSV();
             csvFile.clear();
         }
         return csvs;
     }
     //var studentData = JSON.parse(localStorage.sud);
-    //new Renderer().sortStudents(studentData, 5);
+   // new Renderer().sortManual({0:{"Juan Alvarez":{working:"Probably"}, "person":{working:"Not in a thousand years..."}}}, 5);

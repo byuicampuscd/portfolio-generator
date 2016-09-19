@@ -25,7 +25,7 @@ function generatePortfolio(students, courses) {
         studentData[`${students[i].getCapacity(studentsQuartile)}`].push(students[i]);
     }
 
-    var student_capacity = Math.ceil(ca / sa);
+    var student_capacity = Math.ceil(ca / sa)+2;
     for(var i in courseData){
         if(i == "undefined"){
             delete courseData[i];
@@ -44,7 +44,7 @@ function generatePortfolio(students, courses) {
 
     console.log("Results", studentData, courseData);
 
-    rend.sortStudents(studentData,5, (groups)=>{
+    rend.sortManual(studentData,5, (groups)=>{
         var files = []
         var csv_docs = (rend.groupsToCSV(groups));
         var writer = new CSV_Writer();
@@ -84,7 +84,7 @@ function generatePortfolio(students, courses) {
                 }
         },50);
 
-        displayer(groups);
+       // displayer(groups);
 
     });
 
