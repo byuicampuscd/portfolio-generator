@@ -25,7 +25,7 @@ function generatePortfolio(students, courses) {
         studentData[`${students[i].getCapacity(studentsQuartile)}`].push(students[i]);
     }
 
-    var student_capacity = Math.ceil(ca / sa);
+    var student_capacity = Math.ceil(ca / sa)+2;
     for(var i in courseData){
         if(i == "undefined"){
             delete courseData[i];
@@ -84,7 +84,7 @@ function generatePortfolio(students, courses) {
                 }
         },50);
 
-        displayer(groups);
+       // displayer(groups);
 
     });
 
