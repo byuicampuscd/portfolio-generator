@@ -84,7 +84,7 @@ function generatePortfolio(students, courses) {
                 }
         },50);
 
-       // displayer(groups);
+        displayer(groups);
 
     });
 
