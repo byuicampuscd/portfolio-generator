@@ -49,8 +49,11 @@ CSV_Writer.prototype.writeFile = (name,data,oncomplete) =>{
     }
 }
 
+/*
 var gen = new CSV_Writer();
 gen.writeFile("hello","test,data\nworks",(link)=>{
     console.log(link);
 });
+*/
+
 //console.log(gen.URL);
