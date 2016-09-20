@@ -95,6 +95,7 @@ Renderer.prototype.injectStudent = function injectStudent(student, data) {
 Renderer.prototype.sortManual =(students, groups, callback)=> {
     var manual = {
         "Group 1":{
+            'Zach Williams':{},
             'Matt Jones (FT)':{},
             'Sara Balter (FT)':{},
             'Annie Chambers':{},
@@ -104,6 +105,7 @@ Renderer.prototype.sortManual =(students, groups, callback)=> {
             'Camille Stiles':{}
         },
         "Group 3":{
+            "Sam McGrath":{},
             "Mackenzy Taylor":{},
             "Scott O'Neal":{},
             "Seth Childers":{},
@@ -116,6 +118,7 @@ Renderer.prototype.sortManual =(students, groups, callback)=> {
             "Emily Gailbraith":{}
         },
         "Group 2":{
+             "Scott Terry (FT)":{},
             "Johnna Franks":{},
             "Hannah Spear":{},
             "Taylor Scott":{},
@@ -124,19 +127,13 @@ Renderer.prototype.sortManual =(students, groups, callback)=> {
             "Jonathan Manoa":{},
         },
         group4:{
+            "Chris Drake":{},
             "Juan Alvarez":{},
             "Oaklie Wayman":{},
             "Jacob Patterson":{},
             "Austin Swenson":{},
             "Richlue Kpakor":{},
             "Cole Herrin":{}
-        },
-        group5:{
-            "Juan Alvarez":{},
-            "Hannah Spear":{},
-            "Nate Hjorth":{},
-            "Jared Moreno":{},
-            "Jason Haung":{}
         }
 
 
