@@ -114,7 +114,7 @@ function displayTeam(students, teamContainer, group, dropdownArrow) {
 
     for (var j in students) {
         var student = students[j],
-            studentname = j,
+            studentname = j.replace(" (FT)", ""),
             studentContainer = $("<div id='studentContainer'></div>"),
             studentPara = $(`<p>${studentname}</p>`),
             img = $('<img style="width: 100px;">');

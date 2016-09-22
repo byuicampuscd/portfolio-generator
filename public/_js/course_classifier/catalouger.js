@@ -69,6 +69,18 @@ function generatePortfolio(students, courses) {
                 dwn.click();
             }
         }, 50);
+
+
+        for (var i in groups) {
+            var group = groups[i];
+            for (var j in group) {
+                var student = group[j];
+                if (Object.keys(student).length === 0) {
+                    student.isLead = true;
+                };
+            }
+        }
+
         database.ref('portfolio/data').set(groups);
     });
 }
