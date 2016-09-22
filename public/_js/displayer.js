@@ -142,7 +142,7 @@ function displayTeam(students, teamContainer, group, dropdownArrow) {
 
 function displayer(groups) {
 
-    var container = $('<div id="container"></div>')
+    var container = $('<div id="container"></div>');
 
     for (var i in groups) {
         var students = groups[i],
