@@ -87,7 +87,12 @@ function generatePortfolio(students, courses) {
                 dwn.click();
             }
         }, 50);
-        // displayer(groups);
+
+        var checked = document.querySelector("#CSVcheck").checked;
+
+        if (checked === true) displayer(groups);
+
+//        database.ref('portfolio/data').set(groups);
     });
 }
 
