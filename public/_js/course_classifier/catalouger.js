@@ -27,6 +27,7 @@ function generatePortfolio(students, courses) {
         if (!studentData[`${students[i].getCapacity(studentsQuartile)}`]) studentData[`${students[i].getCapacity(studentsQuartile)}`] = [];
         studentData[`${students[i].getCapacity(studentsQuartile)}`].push(students[i]);
     }
+
     var student_capacity = Math.ceil(ca / sa) + 2;
     for (var i in courseData) {
         if (i == "undefined") {
@@ -88,10 +89,6 @@ function generatePortfolio(students, courses) {
                 dwn.click();
             }
         }, 50);
-
-        var checked = document.querySelector("#CSVcheck").checked;
-
-        if (checked === true) displayer(groups);
 
         database.ref('portfolio/data').set(groups);
     });

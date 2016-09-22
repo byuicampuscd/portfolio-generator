@@ -1,11 +1,11 @@
-var users;
-
-function checkImg(studentname, img) {
+function checkImg(users, studentname, img) {
 
     for (var z in users) {
         var user = users[z];
 
-        if (user.displayName === studentname) {
+        var clean = studentname.replace(" (FT)", "")
+
+        if (user.displayName === clean) {
             img.attr("src", user.photoURL)
         }
     }
@@ -27,15 +27,15 @@ function displayCourseAssignment(courseDataInfo, studentContainer, coursesCont) 
     for (var i = 0; i < courses.length; i++) {
         var courseLead = $(`<p>Course Lead: ${courses[i]['course_lead']}</p>`),
             department = $(`<p>Department: ${courses[i].department}</p>`),
-            courseName = $(`<p>Course Name: ${courses[i].name}</p>`),
+            courseName = $(`<p>${courses[i].name}</p>`),
             courseContainer = $("<div></div>");
 
         courseContainer
             .attr("class", "courseContainer");
 
         courseContainer
-            .append(department)
             .append(courseName)
+            .append(department)
             .append(courseLead);
 
         coursesCont
@@ -72,7 +72,7 @@ function addInfo(student, studentContainer) {
 
     for (var i in courseAssignment) {
         var detail = courseAssignment,
-            name = i,
+            name = i.replace(" (A)", ""),
             courseDataInfo = courseAssignment[i],
             coursesCont = $("<div></div>"),
             headerName = $(`<h3>${name}</h3>`);
@@ -121,7 +121,10 @@ function displayTeam(students, teamContainer, group, dropdownArrow) {
 
         img.attr("src", "../images/blank-profile.png");
 
-        checkImg(studentname, img);
+        database.ref('users').once("value", snap => {
+            var users = snap.val();
+            checkImg(users, studentname, img);
+        });
 
         studentContainer
             .append(img)
@@ -142,18 +145,24 @@ function displayer(groups) {
     var container = $('<div id="container"></div>');
 
     for (var i in groups) {
-        var students = groups[i],
-            teamContainer = $('<div id="teamcontainer"></div>'),
-            dropdownArrow = $('<div></div>'),
-            group = $(`<h2>${i}</h2>`);
 
-        hiderShower(dropdownArrow);
+        if (typeof groups[i] === "object") {
 
-        displayTeam(students, teamContainer, group, dropdownArrow);
+            var students = groups[i],
+                teamContainer = $('<div id="teamcontainer"></div>'),
+                dropdownArrow = $('<div></div>'),
+                group = $(`<h2>${i}</h2>`);
 
-        container.append(teamContainer);
+            hiderShower(dropdownArrow);
+
+            displayTeam(students, teamContainer, group, dropdownArrow);
+
+            container.append(teamContainer);
+        }
+
     }
 
+    $("#portfolioOutput").html("");
     $("#portfolioOutput").append(container);
 
     return;
