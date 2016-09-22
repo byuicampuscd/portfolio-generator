@@ -161,6 +161,4 @@ function displayer(groups) {
 
     return;
 
-    //    database.ref('portfolio/data').set(groups);
-
 }
