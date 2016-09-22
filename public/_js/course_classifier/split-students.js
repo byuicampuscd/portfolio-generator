@@ -194,10 +194,10 @@ Renderer.prototype.groupsToCSV = function (groups) {
                     for (var a in groups[i][j].courses) {
                         csvFile.addLine(a);
                         csvFile.addLine("Course Lead,Department,Name")
-                        for (var b in groups[i][j].courses[a].courses) {
-                            csvFile.addItem(groups[i][j].courses[a].courses[b].course_lead);
-                            csvFile.addItem(groups[i][j].courses[a].courses[b].department);
-                            csvFile.addItem(groups[i][j].courses[a].courses[b].name);
+                        for (var b in groups[i][j].courses[a]) {
+                            csvFile.addItem(groups[i][j].courses[a][b].course_lead);
+                            csvFile.addItem(groups[i][j].courses[a][b].department);
+                            csvFile.addItem(groups[i][j].courses[a][b].name);
                             csvFile.endLine();
                         }
                         //console.log("Running", a, csvFile.getCSV());

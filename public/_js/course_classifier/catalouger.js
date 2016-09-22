@@ -25,7 +25,7 @@ function generatePortfolio(students, courses) {
         if (!studentData[`${students[i].getCapacity(studentsQuartile)}`]) studentData[`${students[i].getCapacity(studentsQuartile)}`] = [];
         studentData[`${students[i].getCapacity(studentsQuartile)}`].push(students[i]);
     }
-    var student_capacity = Math.ceil(ca / sa)+2;
+    var student_capacity = Math.ceil(ca / sa) + 2;
     for (var i in courseData) {
         if (i == "undefined") {
             delete courseData[i];
@@ -38,20 +38,18 @@ function generatePortfolio(students, courses) {
     for (var i in studentData) student_length += studentData[i].length;
     console.log(student_length);
     console.log(courseData, studentData);
-    sort3(courseData, student_capacity, studentData,student_length);
+    sort3(courseData, student_capacity, studentData, student_length);
     /*
     courseData  = sort2(courseData, student_capacity);
    // sortCourseData(student_capacity);
 
     assignCourses(student_capacity);
     */
-    for(var i in studentData)
-        sortStudents(studentData[i]);
+    for (var i in studentData) sortStudents(studentData[i]);
     console.log(studentData, courseData);
     var rend = new Renderer(studentData);
-
     console.log("Results", studentData, courseData);
-   // */
+    // */
     rend.sortManual(studentData, 4, (groups) => {
         var files = []
         var csv_docs = (rend.groupsToCSV(groups));
@@ -94,7 +92,7 @@ function generatePortfolio(students, courses) {
 function sort3(course_data, student_capacity, studentData, students) {
     var pool = [];
     var used = {};
-
+    // displayer(groups);
     function sumCourses(courses) {
         var i = 0;
         for (var a in courses) i += courses[a].score;
@@ -151,27 +149,38 @@ function sort3(course_data, student_capacity, studentData, students) {
             }
         }
     }
+
+    function sortToGroups(courses) {
+        var groups = {};
+        for (var i in courses) {
+            groups[courses[i].group_name] = [];
+        }
+        for (var i in courses) {
+            groups[courses[i].group_name].push(courses[i]);
+        }
+        return groups;
+    }
     for (var i in course_data)
         for (var j in course_data[i].courses) pool.push(course_data[i].courses[j]);
     console.log(pool);
-    var cps = (pool.length/students)-2;
+    var cps = (pool.length / students) - 2;
     console.log(students);
-    var indexes= ["0.5","1","1.5","2"];
+    var indexes = ["0.5", "1", "1.5", "2"];
     for (var i in indexes) {
         for (var j in studentData[indexes[i]]) {
-                studentData[indexes[i]][j].courses = getCluster(pool, (studentData[indexes[i]][j].getCapacity()) * student_capacity,(studentData[indexes[i]][j].getCapacity())*cps )
-            for(var x in studentData[indexes[i]][j].courses){
-                    studentData[indexes[i]][j].load += studentData[indexes[i]][j].courses[x].score;
+            studentData[indexes[i]][j].courses = sortToGroups(getCluster(pool, (studentData[indexes[i]][j].getCapacity()) * student_capacity, (studentData[indexes[i]][j].getCapacity()) * cps));
+            for (var x in studentData[indexes[i]][j].courses) {
+                for(var y in studentData[indexes[i]][j].courses[x])
+                studentData[indexes[i]][j].load += studentData[indexes[i]][j].courses[x][y].score;
             }
         }
     }
     //var indexes = getIndexes(studentData);
-    for(var i in pool){
-        studentData["2"][studentData["2"].length-1].courses.push(pool[i]);
-    }
     console.log(studentData, pool);
 }
-
+/*
+ * GARBAGE!!!!
+ */
 function sortStudents(students) {
     var courses = students;
     courses.sort((a, b) => {
