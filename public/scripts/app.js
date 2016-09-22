@@ -2,23 +2,21 @@
 
     var LoadPortfolio = React.createClass({
 
-        loadNewPortfolio: function (e) {
-            document.querySelector("#portfolioOutput").innerHTML = "<h1>New Portfolio!</h1>";
-        },
-
         loadPreviousPortfolio: function (e) {
-            document.querySelector("#portfolioOutput").innerHTML = "<h1>Old portofolio!</h1>";
+
+            console.log("Load Previous Portfolio.")
+
+            database.ref('portfolio/data').once("value", snap => {
+                var data = snap.val();
+
+                displayer(data);
+            })
         },
 
         render: function () {
             return ( <div id = "portfolio" >
                         < h2 > Portfolio < /h2>
-                        < input type = "button"
-                                value = "Load New Portfolio?"
-                                onClick = {
-                                    this.loadNewPortfolio
-                                }
-                        /> < input type = "button"
+                                < input type = "button"
                                     value = "Load Previously Made Portfolio?"
                                     onClick = {
                                         this.loadPreviousPortfolio

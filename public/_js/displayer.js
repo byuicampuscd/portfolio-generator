@@ -1,9 +1,5 @@
 var users;
 
-database.ref('users').once("value", snap => {
-    users = snap.val();
-})
-
 function checkImg(studentname, img) {
 
     for (var z in users) {
