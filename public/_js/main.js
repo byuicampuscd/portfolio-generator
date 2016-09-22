@@ -62,7 +62,9 @@ function buildQuartiles(){
 }
 
 function rankData(){
-    var courses = [];
+    var courses = [],
+        checked = document.querySelector("#CSVcheck").checked;
+
     for(var i in sectionLists){
 
         if(!ticketLists[i]){
@@ -79,6 +81,6 @@ function rankData(){
         students.push(new Student(i,studentsList[i]["Full Time Weight"], studentsList[i][options.studentColumn]));
     }
 
-    generatePortfolio(students,courses);
+    if (checked === true) generatePortfolio(students,courses);
 
 }

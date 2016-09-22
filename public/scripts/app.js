@@ -118,7 +118,7 @@
                         <label className="custom-file-upload">Tickets Data CSV (Student Profiling) <input onChange = { this.fileUpload } type = "file" id = "tickets" / ></label>
                         <label className="custom-file-upload">Student Data CSV (Student Rank) <input onChange = { this.fileUpload } type = "file" id = "student" / ></label>
                         <input style={ this.display(this.props.role) } onClick = { this.showOptionsModal } type = "button" value="Show Options" / >
-                        <label>Check to download CSVs instead. <input type='checkbox' id="CSVcheck" /></label>
+                        <label>Check to display groups. <input type='checkbox' id="CSVcheck" /></label>
                     < /div>
             );
         }
