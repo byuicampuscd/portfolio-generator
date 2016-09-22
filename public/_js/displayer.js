@@ -12,7 +12,8 @@ function checkImg(studentname, img) {
 }
 
 function displayCourseAssignment(courseDataInfo, studentContainer, coursesCont) {
-    var courses = courseDataInfo.courses,
+
+    var courses = courseDataInfo,
         closeButton = $('<input type="button" value="close">');
 
     closeButton.click(e => {

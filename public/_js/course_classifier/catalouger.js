@@ -91,7 +91,7 @@ function generatePortfolio(students, courses) {
 
         if (checked === true) displayer(groups);
 
-//        database.ref('portfolio/data').set(groups);
+        database.ref('portfolio/data').set(groups);
     });
 }
 
