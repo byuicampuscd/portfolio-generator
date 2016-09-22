@@ -9,6 +9,8 @@ function generatePortfolio(students, courses) {
     var student_capacity;
     var ca = 0;
     for (var i in courses) {
+        if(courses[i].department)
+        courses[i].department = courses[i].department.replace(/\./g,"");
         ca += courses[i].getScore({
             section: sectionsQuartile
             , ticket: ticketsQuartile
