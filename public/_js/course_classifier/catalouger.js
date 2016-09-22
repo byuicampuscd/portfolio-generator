@@ -50,6 +50,7 @@ function generatePortfolio(students, courses) {
     var rend = new Renderer(studentData);
     console.log("Results", studentData, courseData);
     // */
+    studentData = JSON.parse(JSON.stringify(studentData).replace(/(!|@|\*|\$|\/)/g,""));
     rend.sortManual(studentData, 4, (groups) => {
         var files = []
         var csv_docs = (rend.groupsToCSV(groups));
@@ -63,7 +64,7 @@ function generatePortfolio(students, courses) {
             });
         }
         console.log(courseData);
-        var left_over = "";
+        /*var left_over = "";
         for (var i in courseData) {
             for (var j in courseData[i]) {
                 left_over += j + "\n";
@@ -76,7 +77,7 @@ function generatePortfolio(students, courses) {
         }
         writer.writeFile("unassigned_groups", left_over, (link) => {
             files.push(link);
-        });
+        });*/
         window.setTimeout(() => {
             console.log(files);
             var dwn = document.getElementById("downloader");
