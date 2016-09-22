@@ -31,10 +31,6 @@ function generatePortfolio(students, courses) {
         studentData[`${students[i].getCapacity(studentsQuartile)}`].push(students[i]);
     }
 
-<<<<<<< HEAD
-=======
-    //determines general student capacity
->>>>>>> team/master
     var student_capacity = Math.ceil(ca / sa) + 2;
     for (var i in courseData) {
         if (i == "undefined") {
@@ -73,14 +69,7 @@ function generatePortfolio(students, courses) {
                 dwn.click();
             }
         }, 50);
-<<<<<<< HEAD
-
         database.ref('portfolio/data').set(groups);
-=======
-        //displays the groups
-        var checked = document.querySelector("#CSVcheck").checked;
-        if (checked === true) displayer(groups);
->>>>>>> team/master
     });
 }
 /*
