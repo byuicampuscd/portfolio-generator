@@ -135,7 +135,13 @@ main#app {
             }
         }
         #studentContainer {
-            width: 300px;
+            width: 250px;
+            border: 1px solid #006096;
+            box-shadow: 0px 0px 2.5px 1px rgba(0, 0, 0, 0.3);
+            border-radius: 2.5px;
+            margin-right: 20px;
+            margin-bottom: 10px;
+            padding: 5px;
             & > div {
                 background-color: $black;
                 box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.3);
@@ -149,7 +155,6 @@ main#app {
             }
             h3 {
                 background-color: $black;
-                width: 200px;
                 padding: 5px;
                 border-radius: 2.5px;
                 &:hover {

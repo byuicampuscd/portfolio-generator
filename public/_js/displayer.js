@@ -13,16 +13,7 @@ function checkImg(users, studentname, img) {
 
 function displayCourseAssignment(courseDataInfo, studentContainer, coursesCont) {
 
-    var courses = courseDataInfo,
-        closeButton = $('<input type="button" value="close">');
-
-    closeButton.click(e => {
-        var parent = e.target.parentElement;
-
-        $(parent).css({
-            display: "none",
-        })
-    })
+    var courses = courseDataInfo;
 
     for (var i = 0; i < courses.length; i++) {
         var courseLead = $(`<p>Course Lead: ${courses[i]['course_lead']}</p>`),
@@ -40,7 +31,6 @@ function displayCourseAssignment(courseDataInfo, studentContainer, coursesCont) 
 
         coursesCont
             .append(courseContainer)
-            .attr("data-show", "false")
             .css({
                 display: "none"
             });
@@ -48,8 +38,6 @@ function displayCourseAssignment(courseDataInfo, studentContainer, coursesCont) 
         studentContainer
             .append(coursesCont);
     }
-
-    coursesCont.append(closeButton);
 }
 
 function hiderShower(ele) {
@@ -59,11 +47,21 @@ function hiderShower(ele) {
         })
         .click(e => {
             var target = e.target.nextElementSibling,
-                id = e.target.parentElement.id;
-            $(target)
-                .css({
-                    "display": "flex"
-                })
+                status = e.target.getAttribute("data-status");
+
+            if (status === "closed") {
+                $(target)
+                    .css({
+                        "display": "flex"
+                    });
+                $(e.target).attr("data-status", "open");
+            } else if (status === "open") {
+                $(target)
+                    .css({
+                        "display": "none"
+                    });
+                $(e.target).attr("data-status", "closed");
+            }
         });
 }
 
@@ -76,6 +74,9 @@ function addInfo(student, studentContainer) {
             courseDataInfo = courseAssignment[i],
             coursesCont = $("<div></div>"),
             headerName = $(`<h3>${name}</h3>`);
+
+        headerName
+            .attr("data-status", "closed");
 
         hiderShower(headerName);
 
@@ -92,20 +93,11 @@ function displayTeam(students, teamContainer, group, dropdownArrow) {
 
     teamContainer.append(group);
 
-    var oneContainerToRuleThemAll = $("<div></div>"),
-        closeButton = $('<input type="button" value="close">');
+    var oneContainerToRuleThemAll = $("<div></div>");
 
     dropdownArrow.attr("id", "dropArrowMain");
 
     teamContainer.append(dropdownArrow);
-
-    closeButton.click(e => {
-        var parent = e.target.parentElement;
-
-        $(parent).css({
-            display: "none",
-        })
-    })
 
     oneContainerToRuleThemAll
         .css({
@@ -135,8 +127,6 @@ function displayTeam(students, teamContainer, group, dropdownArrow) {
         if (studentname !== "size") oneContainerToRuleThemAll.append(studentContainer);
     }
 
-    oneContainerToRuleThemAll.append(closeButton);
-
     teamContainer.append(oneContainerToRuleThemAll);
 }
 
@@ -152,6 +142,8 @@ function displayer(groups) {
                 teamContainer = $('<div id="teamcontainer"></div>'),
                 dropdownArrow = $('<div></div>'),
                 group = $(`<h2>${i}</h2>`);
+
+            dropdownArrow.attr("data-status", "closed");
 
             hiderShower(dropdownArrow);
 
