@@ -68,6 +68,10 @@ function hiderShower(ele) {
 function addInfo(student, studentContainer) {
     var courseAssignment = student.courses;
 
+    if (student.isLead === true) {
+        studentContainer.append("<p>Team Lead</p>")
+    }
+
     for (var i in courseAssignment) {
         var detail = courseAssignment,
             name = i.replace(" (A)", ""),
