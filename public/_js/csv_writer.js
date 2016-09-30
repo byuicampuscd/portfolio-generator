@@ -1,6 +1,6 @@
 var CSV_Writer = function CSV_Writer(){}
 CSV_Writer.prototype.writeFile = (name,data,oncomplete) =>{
-    console.log("Wroking",window.webkitRequestFileSystem);
+//    console.log("Wroking",window.webkitRequestFileSystem);
     window.webkitRequestFileSystem(TEMPORARY, 900 * 1024 * 1024, (fs) => {
         log(fs);
 

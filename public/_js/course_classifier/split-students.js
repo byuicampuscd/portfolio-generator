@@ -96,12 +96,12 @@ Renderer.prototype.sortManual =(students, groups, callback)=> {
     var manual = {
         "Team 1":{
             'Zach Williams':{},
-            'Matt Jones (FT)':{},
-            'Sara Balter (FT)':{},
+            'Matthew Jones':{},
+            'Sara Balter':{},
             'Annie Chambers':{},
-            'Matt Wyndham (FT)':{},
+            'Matt Wyndham':{},
             'Jing Song Huang':{},
-            'Jared Moreno (FT)':{},
+            'Jared Moreno Acosta':{},
             'Camille Stiles':{}
         },
         "Team 3":{
@@ -118,7 +118,7 @@ Renderer.prototype.sortManual =(students, groups, callback)=> {
             "Emily Gailbraith":{}
         },
         "Team 2":{
-             "Scott Terry (FT)":{},
+             "Scott Terry":{},
             "Johnna Franks":{},
             "Hannah Spear":{},
             "Taylor Scott":{},
@@ -128,7 +128,7 @@ Renderer.prototype.sortManual =(students, groups, callback)=> {
         },
         "Team 4":{
             "Chris Drake":{},
-            "Juan Alvarez":{},
+            "Juan Alvarez Varas":{},
             "Oaklie Wayman":{},
             "Jacob Patterson":{},
             "Austin Swenson":{},
@@ -146,7 +146,7 @@ Renderer.prototype.sortManual =(students, groups, callback)=> {
                 if(students[i][j].name in manual[a]){
                     manual[a][students[i][j].name] =students[i][j];
                 }else{
-                    console.log(students[i][j].name +" is not in " + manual[a])
+                   // console.log(students[i][j].name +" is not in " + manual[a])
                 }
         }
     }
@@ -184,7 +184,7 @@ Renderer.prototype.groupsToCSV = function (groups) {
         var csvs = {};
         console.log(groups);
         for (var i in groups) {
-            console.log(i);
+            //console.log(i);
             var csvFile = new CSV();
             csvFile.addLine(i);
             for (var j in groups[i]) {
@@ -206,7 +206,7 @@ Renderer.prototype.groupsToCSV = function (groups) {
                 }
             }
             //console.log(csvFile.getCSV());
-            console.log(i);
+            //console.log(i);
             csvs[i] = csvFile.getCSV();
             csvFile.clear();
         }

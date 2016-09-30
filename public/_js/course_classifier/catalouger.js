@@ -45,6 +45,7 @@ function generatePortfolio(students, courses) {
     for (var i in studentData) student_length += studentData[i].length;
     // assigns courses to students
     sort3(courseData, student_capacity, studentData, student_length);
+    console.log(studentData, courseData);
     //gives the higher caliber courses to the more experienced students
     for (var i in studentData) sortStudents(studentData[i]);
     //setup for csv export
