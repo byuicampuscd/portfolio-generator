@@ -1,45 +1,36 @@
-var users;
-
-function checkImg(studentname, img) {
+function checkImg(users, studentname, img) {
 
     for (var z in users) {
         var user = users[z];
 
-        if (user.displayName === studentname) {
+        var clean = studentname.replace(" (FT)", "")
+
+        if (user.displayName === clean) {
             img.attr("src", user.photoURL)
         }
     }
 }
 
 function displayCourseAssignment(courseDataInfo, studentContainer, coursesCont) {
-    var courses = courseDataInfo.courses,
-        closeButton = $('<input type="button" value="close">');
 
-    closeButton.click(e => {
-        var parent = e.target.parentElement;
-
-        $(parent).css({
-            display: "none",
-        })
-    })
+    var courses = courseDataInfo;
 
     for (var i = 0; i < courses.length; i++) {
         var courseLead = $(`<p>Course Lead: ${courses[i]['course_lead']}</p>`),
             department = $(`<p>Department: ${courses[i].department}</p>`),
-            courseName = $(`<p>Course Name: ${courses[i].name}</p>`),
+            courseName = $(`<p>${courses[i].name}</p>`),
             courseContainer = $("<div></div>");
 
         courseContainer
             .attr("class", "courseContainer");
 
         courseContainer
-            .append(department)
             .append(courseName)
+            .append(department)
             .append(courseLead);
 
         coursesCont
             .append(courseContainer)
-            .attr("data-show", "false")
             .css({
                 display: "none"
             });
@@ -47,8 +38,6 @@ function displayCourseAssignment(courseDataInfo, studentContainer, coursesCont) 
         studentContainer
             .append(coursesCont);
     }
-
-    coursesCont.append(closeButton);
 }
 
 function hiderShower(ele) {
@@ -58,23 +47,40 @@ function hiderShower(ele) {
         })
         .click(e => {
             var target = e.target.nextElementSibling,
-                id = e.target.parentElement.id;
-            $(target)
-                .css({
-                    "display": "flex"
-                })
+                status = e.target.getAttribute("data-status");
+
+            if (status === "closed") {
+                $(target)
+                    .css({
+                        "display": "flex"
+                    });
+                $(e.target).attr("data-status", "open");
+            } else if (status === "open") {
+                $(target)
+                    .css({
+                        "display": "none"
+                    });
+                $(e.target).attr("data-status", "closed");
+            }
         });
 }
 
 function addInfo(student, studentContainer) {
     var courseAssignment = student.courses;
 
+    if (student.isLead === true) {
+        studentContainer.append("<p>Team Lead</p>")
+    }
+
     for (var i in courseAssignment) {
         var detail = courseAssignment,
-            name = i,
+            name = i.replace(" (A)", ""),
             courseDataInfo = courseAssignment[i],
             coursesCont = $("<div></div>"),
             headerName = $(`<h3>${name}</h3>`);
+
+        headerName
+            .attr("data-status", "closed");
 
         hiderShower(headerName);
 
@@ -91,20 +97,11 @@ function displayTeam(students, teamContainer, group, dropdownArrow) {
 
     teamContainer.append(group);
 
-    var oneContainerToRuleThemAll = $("<div></div>"),
-        closeButton = $('<input type="button" value="close">');
+    var oneContainerToRuleThemAll = $("<div></div>");
 
     dropdownArrow.attr("id", "dropArrowMain");
 
     teamContainer.append(dropdownArrow);
-
-    closeButton.click(e => {
-        var parent = e.target.parentElement;
-
-        $(parent).css({
-            display: "none",
-        })
-    })
 
     oneContainerToRuleThemAll
         .css({
@@ -113,14 +110,17 @@ function displayTeam(students, teamContainer, group, dropdownArrow) {
 
     for (var j in students) {
         var student = students[j],
-            studentname = j,
+            studentname = j.replace(" (FT)", ""),
             studentContainer = $("<div id='studentContainer'></div>"),
             studentPara = $(`<p>${studentname}</p>`),
             img = $('<img style="width: 100px;">');
 
         img.attr("src", "../images/blank-profile.png");
 
-        checkImg(studentname, img);
+        database.ref('users').once("value", snap => {
+            var users = snap.val();
+            checkImg(users, studentname, img);
+        });
 
         studentContainer
             .append(img)
@@ -131,8 +131,6 @@ function displayTeam(students, teamContainer, group, dropdownArrow) {
         if (studentname !== "size") oneContainerToRuleThemAll.append(studentContainer);
     }
 
-    oneContainerToRuleThemAll.append(closeButton);
-
     teamContainer.append(oneContainerToRuleThemAll);
 }
 
@@ -141,18 +139,26 @@ function displayer(groups) {
     var container = $('<div id="container"></div>');
 
     for (var i in groups) {
-        var students = groups[i],
-            teamContainer = $('<div id="teamcontainer"></div>'),
-            dropdownArrow = $('<div></div>'),
-            group = $(`<h2>${i}</h2>`);
 
-        hiderShower(dropdownArrow);
+        if (typeof groups[i] === "object") {
 
-        displayTeam(students, teamContainer, group, dropdownArrow);
+            var students = groups[i],
+                teamContainer = $('<div id="teamcontainer"></div>'),
+                dropdownArrow = $('<div></div>'),
+                group = $(`<h2>${i}</h2>`);
 
-        container.append(teamContainer);
+            dropdownArrow.attr("data-status", "closed");
+
+            hiderShower(dropdownArrow);
+
+            displayTeam(students, teamContainer, group, dropdownArrow);
+
+            container.append(teamContainer);
+        }
+
     }
 
+    $("#portfolioOutput").html("");
     $("#portfolioOutput").append(container);
 
     return;

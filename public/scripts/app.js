@@ -1,33 +1,5 @@
 (function () {
 
-    var LoadPortfolio = React.createClass({
-
-        loadPreviousPortfolio: function (e) {
-
-            console.log("Load Previous Portfolio.")
-
-            database.ref('portfolio/data').once("value", snap => {
-                var data = snap.val();
-
-                displayer(data);
-            })
-        },
-
-        render: function () {
-            return ( <div id = "portfolio" >
-                        < h2 > Portfolio < /h2>
-                                < input type = "button"
-                                    value = "Load Previously Made Portfolio?"
-                                    onClick = {
-                                        this.loadPreviousPortfolio
-                                    }
-                        />
-                    </div>
-            );
-        }
-
-    });
-
     var Options = React.createClass({
 
         closeModal: function(e) {
@@ -110,18 +82,20 @@
         },
 
         render: function () {
-            return ( < div id = "inputs" >
-                        <h2> Inputs </h2>
+
+            return ( < div style={ this.display(this.props.role) } id = "inputs" >
+                        <h2>Input CSVs</h2>
+                        <p>Upload the CSV files to replace the data in Firebase.</p>
                         <label className="custom-file-upload">Section Data CSV (Course Variant)<input onChange = { this.fileUpload } type = "file" id = "section" / ></label>
-                        <label className="custom-file-upload">Tickets Data CSV (Student Profiling) <input onChange = { this.fileUpload } type = "file" id = "tickets" / ></label>
+                        <label className="custom-file-upload">Tickets Data CSV (Course Rank) <input onChange = { this.fileUpload } type = "file" id = "tickets" / ></label>
                         <label className="custom-file-upload">Student Data CSV (Student Rank) <input onChange = { this.fileUpload } type = "file" id = "student" / ></label>
-                        <input style={ this.display(this.props.role) } onClick = { this.showOptionsModal } type = "button" value="Show Options" / >
-                        <label>Check to display groups. <input type='checkbox' id="CSVcheck" /></label>
                     < /div>
             );
         }
 
     });
+
+//<input style={ this.display(this.props.role) } onClick = { this.showOptionsModal } type = "button" value="Show Options" / >
 
     var App = React.createClass({
 
@@ -140,13 +114,19 @@
         },
 
         componentWillMount: function () {
-            var users = database.ref('users');
+            var users = database.ref('users'),
+                portfolio = database.ref('portfolio/data');
             this.bindAsObject(users, 'users');
+            this.bindAsObject(portfolio, 'portfolio');
             users.on("value", this.handleDataLoaded);
         },
 
-        render: function () {
+        loadPortfolio: function() {
+            var portfolio = this.state.portfolio;
+            displayer(portfolio);
+        },
 
+        render: function () {
             var role,
                 users = this.state.users;
 
@@ -162,8 +142,7 @@
                             <h1> Portfolio Generator </h1>
                             <Inputs role = { role } />
                         </header>
-                        < LoadPortfolio prevPortfolio = { this.state.portfolio } />
-                        < div id = "portfolioOutput" > < /div>
+                        < div id = "portfolioOutput" > { this.loadPortfolio() } < /div>
                         < Options / >
                     < /div>
             );

@@ -13,7 +13,7 @@ main#app {
     font-weight: 100;
     & > div {
         margin-top: 20px;
-        margin-left: 150px;
+        margin-left: 100px;
         & > div {
             margin-bottom: 15px;
         }
@@ -43,7 +43,7 @@ main#app {
         }
     }
     #portfolioMain {
-        width: 60%;
+        width: 70%;
     }
     #portfolio {
         padding: 20px;
@@ -94,11 +94,10 @@ main#app {
             flex-wrap: wrap;
             justify-content: space-between;
             & > h2 {
-                flex: 1 0 94%;
+                flex: 1 0 90%;
                 margin-bottom: 10px
             }
             & > div:nth-of-type(1) {
-                flex: 1 0 5%;
                 height: 0;
                 width: 0;
                 border-left: 20px solid transparent;
@@ -136,7 +135,13 @@ main#app {
             }
         }
         #studentContainer {
-            width: 300px;
+            width: 250px;
+            border: 1px solid #006096;
+            box-shadow: 0px 0px 2.5px 1px rgba(0, 0, 0, 0.3);
+            border-radius: 2.5px;
+            margin-right: 20px;
+            margin-bottom: 10px;
+            padding: 5px;
             & > div {
                 background-color: $black;
                 box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.3);
@@ -150,7 +155,6 @@ main#app {
             }
             h3 {
                 background-color: $black;
-                width: 200px;
                 padding: 5px;
                 border-radius: 2.5px;
                 &:hover {
@@ -164,6 +168,12 @@ main#app {
                 padding: 7.5px;
                 border-radius: 2.5px;
                 background-color: $steel-blue;
+                p {
+                    font-size: 13px,
+                }
+                & p:first-child {
+                    font-size: 20px,
+                }
             }
         }
     }
@@ -171,7 +181,7 @@ main#app {
 
 nav {
     margin-top: 50px;
-    margin-left: 150px;
+    margin-left: 100px;
     & > button {
         cursor: pointer;
         padding: 5px;
