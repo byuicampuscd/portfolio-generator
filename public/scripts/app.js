@@ -82,7 +82,7 @@
                         <h2>Input CSVs</h2>
                         <p>Upload the CSV files to replace the data in Firebase.</p>
                         <label className="custom-file-upload">Section Data CSV (Course Variant)<input onChange = { this.fileUpload } type = "file" id = "section" / ></label>
-                        <label className="custom-file-upload">Tickets Data CSV (Student Profiling) <input onChange = { this.fileUpload } type = "file" id = "tickets" / ></label>
+                        <label className="custom-file-upload">Tickets Data CSV (Course Rank) <input onChange = { this.fileUpload } type = "file" id = "tickets" / ></label>
                         <label className="custom-file-upload">Student Data CSV (Student Rank) <input onChange = { this.fileUpload } type = "file" id = "student" / ></label>
                     < /div>
             );
