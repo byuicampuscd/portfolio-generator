@@ -70,7 +70,6 @@ function generatePortfolio(students, courses) {
             }
         }, 50);
 
-
         for (var i in groups) {
             var group = groups[i];
             for (var j in group) {

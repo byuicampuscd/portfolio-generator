@@ -76,11 +76,6 @@
             }
         },
 
-        showOptionsModal: function(e) {
-            var options = document.querySelector("#options");
-            options.style.display = "block";
-        },
-
         render: function () {
 
             return ( < div style={ this.display(this.props.role) } id = "inputs" >
@@ -94,6 +89,13 @@
         }
 
     });
+
+
+
+//        showOptionsModal: function(e) {
+//            var options = document.querySelector("#options");
+//            options.style.display = "block";
+//        },
 
 //<input style={ this.display(this.props.role) } onClick = { this.showOptionsModal } type = "button" value="Show Options" / >
 
