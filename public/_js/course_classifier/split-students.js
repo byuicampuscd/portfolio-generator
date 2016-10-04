@@ -94,31 +94,31 @@ Renderer.prototype.injectStudent = function injectStudent(student, data) {
 
 Renderer.prototype.sortManual =(students, groups, callback)=> {
     var manual = {
-        "Group 1":{
+        "Team 1":{
             'Zach Williams':{},
-            'Matt Jones (FT)':{},
-            'Sara Balter (FT)':{},
-            'Annie Chambers':{},
-            'Matt Wyndham (FT)':{},
+            'Matthew Jones':{},
+            'Sara Balter':{},
+            'Anne Chambers':{},
+            'Matt Wyndham':{},
             'Jing Song Huang':{},
-            'Jared Moreno (FT)':{},
+            'Jared Moreno Acosta':{},
             'Camille Stiles':{}
         },
-        "Group 3":{
+        "Team 3":{
             "Sam McGrath":{},
             "Mackenzy Taylor":{},
             "Scott O'Neal":{},
             "Seth Childers":{},
             "Jason Braithwaite":{},
             "Katy Kempton":{},
-            "Felipe Chora":{},
+            "Felipe Chora Chavez":{},
             "Ashwini Krishnan":{},
-            "Megan Cottam":{},
+            "Meghan Cottam":{},
             "Seth Benson":{},
-            "Emily Gailbraith":{}
+            "Emily Galbraith":{}
         },
-        "Group 2":{
-             "Scott Terry (FT)":{},
+        "Team 2":{
+             "Scott Terry":{},
             "Johnna Franks":{},
             "Hannah Spear":{},
             "Taylor Scott":{},
@@ -126,9 +126,9 @@ Renderer.prototype.sortManual =(students, groups, callback)=> {
             "Nate Hjorth":{},
             "Jonathan Manoa":{},
         },
-        group4:{
+        "Team 4":{
             "Chris Drake":{},
-            "Juan Alvarez":{},
+            "Juan Alvarez Varas":{},
             "Oaklie Wayman":{},
             "Jacob Patterson":{},
             "Austin Swenson":{},
@@ -139,23 +139,35 @@ Renderer.prototype.sortManual =(students, groups, callback)=> {
 
     }
 
+    var totalSorted = 0;
+    var left = cloneObject(students);
+    console.log("students",students);
     for (var i in students){
         for(var j in students[i]){
             var found = false;
-            for(var a in manual)
+            for(var a in manual){
                 if(students[i][j].name in manual[a]){
                     manual[a][students[i][j].name] =students[i][j];
+                    left[i].splice(j,1);
+                    found = true;
                 }else{
-                    console.log(students[i][j].name +" is not in " + manual[a])
+                   // console.log(students[i][j].name +" is not in " + manual[a])
                 }
+            }
+
+            if(!found)console.log(students[i][j].name);
         }
     }
 
-    console.log(manual)
+    console.log("Left",left);
+    console.log(manual);
 
    callback(manual);
 }
 
+function cloneObject(object){
+    return JSON.parse(JSON.stringify(object));
+}
 
 var CSV = function CSV() {
     this.csv = "";
@@ -184,7 +196,7 @@ Renderer.prototype.groupsToCSV = function (groups) {
         var csvs = {};
         console.log(groups);
         for (var i in groups) {
-            console.log(i);
+            //console.log(i);
             var csvFile = new CSV();
             csvFile.addLine(i);
             for (var j in groups[i]) {
@@ -206,7 +218,7 @@ Renderer.prototype.groupsToCSV = function (groups) {
                 }
             }
             //console.log(csvFile.getCSV());
-            console.log(i);
+            //console.log(i);
             csvs[i] = csvFile.getCSV();
             csvFile.clear();
         }
