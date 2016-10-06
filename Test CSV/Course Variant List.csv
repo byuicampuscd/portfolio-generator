@@ -1,4 +1,4 @@
-﻿Department_Name,Email,Course,Sections,IsPiloting
+Department_Name,Email,Course,Sections,IsPiloting
 Accounting,Todd Blanchard,ACCTG 205,3,No
 Accounting,Don Campbell,ACCTG 202,4,No
 Accounting,Darryl Foutz,ACCTG 180,7,No
@@ -22,18 +22,19 @@ Biology,Jason Hunt,BIO 265,2,No
 Biology,Seth Ririe,BIO 221,2,No
 Biology,Dwight Wray,BIO 230,3,No
 Biology,John Zenger,BIO 475,2,No
+Business Management, ,B 499A,2,No
 Business Management,Redge Allen,B 321,6,No
 Business Management,Chris Andrews,B 301,5,No
 Business Management,Chris Andrews,B 410,1,No
 Business Management,Chris Andrews,B 433,2,No
-Business Management,Chris Andrews,B 475,1,Yes
 Business Management,Adam Bair,B 320,9,No
 Business Management,Craig Bell,B 100,13,No
 Business Management,Craig Bell,B 100 - Block 1,1,No
-Business Management,Craig Bell,B 100 - Block 2,2,No
+Business Management,Craig Bell,B 100 - Block 2,3,No
 Business Management,Michael Clark,B 361,6,No
 Business Management,Bill Crawford,B 483,3,No
 Business Management,Drew Eagar,B 341,9,No
+Business Management,Ian Falkner,B 428,2,No
 Business Management,Jack Fuller,B 401,1,No
 Business Management,Sandi Grandberry,B 240,4,No
 Business Management,Casey Ann Hurley,B 275,6,No
@@ -43,14 +44,12 @@ Business Management,Casey Ann Hurley,B 424D,1,No
 Business Management,Casey Ann Hurley,B 448,1,No
 Business Management,Bryan Kerr,B 129,4,No
 Business Management,Jayson Kunzler,B 215,4,No
-Business Management,Bruce Kusch,B 499A,2,No
 Business Management,Kent Lundin,B 120,3,No
 Business Management,Kent Lundin,B 250,6,No
 Business Management,Mark Morris,B 383,3,No
 Business Management,Mark Nygren,B 101,6,No
 Business Management,Mark Nygren,B 183,10,No
 Business Management,Mark Nygren,B 283,5,No
-Business Management,Phil Packer,B 428,2,No
 Business Management,Derick Rhoton,B 201,4,No
 Business Management,Derick Rhoton,B 211,8,No
 Business Management,Kevin Shiley,B 380,6,No
@@ -67,15 +66,11 @@ Communication,Caryn Esplin,COMM 130,5,No
 Communication,Andra Hansen,COMM 307,1,No
 Communication,Andra Hansen,COMM 352,2,No
 Communication,Eric Lybbert,COMM 310,2,No
-Communication,Eric Lybbert,COMM 497R - Block 1,1,Yes
-Communication,James Rognon,COMM 315,1,Yes
 Communication,Lee Warnick,COMM 289,2,No
 Communication,Emmilie Whitlock,COMM 111,2,No
-Communication,Lane Williams,COMM 280,2,Yes
 Computer Info Technology,Lee Barney,CIT 261,2,No
 Computer Info Technology,Lee Barney,CIT 360,2,No
 Computer Info Technology,Rex Barzee,CIT 160,10,No
-Computer Info Technology,Jason Blazzard,CIT 230,9,Yes
 Computer Info Technology,Kory Godfrey,CIT 380,3,No
 Computer Info Technology,Kory Godfrey,CIT 381,1,No
 Computer Info Technology,Kent Jackson,CIT 260,3,No
@@ -97,13 +92,11 @@ Computer Sci & Eng,Rex Fisher,ECEN 150,1,No
 Computer Sci & Eng,James Helfrich,CS 124,6,No
 Computer Sci & Eng,James Helfrich,CS 213,3,No
 Computer Sci & Eng,James Helfrich,CS 235,1,No
-Computer Sci & Eng,James Helfrich,CS 364,1,Yes
 Computer Sci & Eng,James Helfrich,CS 371,1,No
 Computer Sci & Eng,James Helfrich,CS 416,1,No
 Computer Sci & Eng,James Helfrich,CS 470,1,No
 Computer Sci & Eng,Ron Jones,ECEN 160,1,No
 Design & Const Mgmt,Ron Kinville,CONST 320,1,No
-Design & Const Mgmt,Mike Sessions,CONST 380,1,Yes
 Economics,David Barrus,ECON 151,4,No
 Economics,Rick Hirschi,ECON 150,8,No
 Economics,Stephen McGary,AGBUS 105,1,No
@@ -190,8 +183,6 @@ Home & Family,Tom Rane,CHILD 310,3,No
 Home & Family,Timothy Rarick,CHILD 210,6,No
 Home & Family,Timothy Rarick,FAML 220,8,No
 Home & Family,Timothy Rarick,FAML 460,3,No
-Home & Family,Cole Ratcliffe,FAML 110 - Block 1,1,Yes
-Home & Family,Cole Ratcliffe,FAML 110 - Block 2,1,Yes
 Home & Family,Cole Ratcliffe,FAML 200,4,No
 Interdiscip. Studies,Margaret Chesley,FHGEN 111,5,No
 Interdiscip. Studies,Margaret Chesley,FHGEN 112,2,No
@@ -211,12 +202,9 @@ Lang & Intnl Studies,Robert Colvin,SPAN 101,4,No
 Lang & Intnl Studies,Robert Colvin,SPAN 102,1,No
 Lang & Intnl Studies,Robert Colvin,SPAN 302,2,No
 Lang & Intnl Studies,John Ivers,TESOL 102,1,No
-Lang & Intnl Studies,John Ivers,TESOL 103,1,Yes
 Lang & Intnl Studies,Michael Paul,TESOL 101,2,No
-Lang & Intnl Studies,Michael Paul,TESOL 105,1,Yes
 Lang & Intnl Studies,Kirk Widdison,TESOL 104,1,No
 Languages & Internationa, ,ECI 001,4,No
-Languages & Internationa, ,ECI 002,2,Yes
 Library,Holly Green,LR 111 - Block 1,2,No
 Library,Holly Green,LR 111 - Block 2,2,No
 Mathematics,Daniel Baird,MATH 100G - G,15,No
@@ -226,15 +214,9 @@ Mathematics,Ryan Cromar,MATH 221B,6,No
 Mathematics,Ryan Cromar,MATH 221C,5,No
 Mathematics,Brad Garner,FDMAT 108,40,No
 Mathematics,Ann Marie Harmon,FDMAT 112,2,No
-Mathematics,Susan Orme,MATH 109,1,Yes
-Mathematics,Susan Orme,MATH 111 - Block 1,1,Yes
 Mathematics,Stephan Oshaughnessy,MATH 100B,2,No
-Mathematics,Jason Rose,MATH 215,1,Yes
-Mechanical Engineering,Nathan Harris,ME 202,1,Yes
-Mechanical Engineering,Kyle Kinghorn,ME 231,1,Yes
 Mechanical Engineering,Garth Miller,ME 201,1,No
 Mechanical Engineering,Justin Miller,AUTO 125,3,No
-Mechanical Engineering,Aaron Schellenberg,ME 172,1,Yes
 Nursing,Erin Bennion,NURS 338,2,No
 Nursing,Jo Ann Dalling,NURS 316,2,No
 Nursing,Jo Ann Dalling,NURS 449,2,No
@@ -255,8 +237,6 @@ Religious Education,Scott Ferguson,FDREL 130 - Block 1,1,No
 Religious Education,Scott Ferguson,FDREL 130 - Block 2,1,No
 Religious Education,Scott Ferguson,FDREL 200,41,No
 Religious Education,Scott Ferguson,FDREL 200 - G,12,No
-Religious Education,Scott Ferguson,FDREL 250 - G,2,Yes
-Religious Education,Scott Ferguson,FDREL 275 - G,103,Yes
 Religious Education,Ryan Gardner,FDREL 225,42,No
 Religious Education,Stan Kivett,FDREL 261,7,No
 Religious Education,John Parker,FDREL 324,4,No
@@ -269,6 +249,7 @@ Religious Education,Robert Wahlquist,FDREL 211,6,No
 Religious Education,Robert Wahlquist,FDREL 211 - Block 2,4,No
 Religious Education,Greg Williams,FDREL 333,4,No
 Religious Education,Nate Williams,FDREL 250,25,No
+Religious Education,Scott Ferguson,FDREL 275 - G,103,No
 Sociology & Social Work,Clint Elison,SOC 311,3,No
 Sociology & Social Work,Nathan Meeker,SOC 111,4,No
 Sociology & Social Work,Nathan Meeker,SOC 323,1,No
@@ -278,9 +259,7 @@ Sociology & Social Work,Richard Whiting,SW 260,1,No
 Teacher Education,David Allen,ED 312,3,No
 Teacher Education,Christine Brown,SPED 200,2,No
 Teacher Education,Mike Christopherson,SPED 441,1,No
-Teacher Education,Dean Cloward,SPED 310,1,Yes
-Teacher Education,Kevin Stanger,ED 200,2,No
+Teacher Education,David Magleby,ED 200,2,No
 Teacher Education,Lorie Tobler,ED 202,2,No
 Theatre and Dance,Hyrum Conrad,TA 115,1,No
 Theatre and Dance,Omar Hansen,TA 401,1,No
-
