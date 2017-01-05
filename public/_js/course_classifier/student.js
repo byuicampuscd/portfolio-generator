@@ -15,11 +15,7 @@ Student.prototype.getCapacity = function (student_quartile) {
         }
         var capacity = 1;
 
-        if(this.name.match(/Matthew Jones|Mackenzy Taylor|Johnna Franks|Juan Alvarez Varas/i))
-            return .5;
-
         if (this.full_time_weight >= 2) return 2;
-
         if (this.ticket_count <= roundToTens(student_quartile.getFirstQuartile())) {
             capacity = .5;
         }

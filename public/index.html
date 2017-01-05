@@ -14,20 +14,43 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
     <!-- React -->
-    <script src="https://unpkg.com/react@15.3.2/dist/react.min.js"></script>
-    <script src="https://unpkg.com/react-dom@15.3.2/dist/react-dom.min.js"></script>
+    <script src="https://fb.me/react-15.3.0.min.js"></script>
+    <script src="https://fb.me/react-dom-15.3.0.min.js"></script>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
+
+    <!-- ReactFire -->
+    <script src="https://cdn.firebase.com/libs/reactfire/1.0.0/reactfire.min.js"></script>
+
+    <!--Firebase OAuth-->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
 
 <body>
 
-	<main id="app">
+    <nav>
+        <button disabled class="nav_button" id="quickstart-sign-in">Sign in with Google</button>
+    </nav>
+
+    <main id="app">
     </main>
 
     <footer>
-
         <!--Scripts-->
+        <script src="./_js/displayer.js"></script>
         <script src="./dist/scripts.js"></script>
 
+        <!--CSV magic-->
+        <script src="./_js/quartile.js"></script>
+        <script src="./_js/course_classifier/student.js"></script>
+        <script src="./_js/course_classifier/course.js"></script>
+        <script src="./_js/csv_writer.js"></script>
+        <script src="./_js/course_classifier/catalouger.js"></script>
+        <script src="./_js/csv_reader.js"></script>
+        <script src="./_js/course_classifier/split-students.js"></script>
+        <script src="./_js/main.js"></script>
+        <a href="" download id="downloader"></a>
     </footer>
 </body>
 

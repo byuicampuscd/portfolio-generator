@@ -76,21 +76,28 @@
             }
         },
 
+        showOptionsModal: function(e) {
+            var options = document.querySelector("#options");
+            options.style.display = "block";
+        },
+
         render: function () {
 
             return ( < div style={ this.display(this.props.role) } id = "inputs" >
                         <h2>Input CSVs</h2>
                         <p>Upload the CSV files to replace the data in Firebase.</p>
-                        <label className="custom-file-upload">Section Data CSV (Course Variant)<input onChange = { this.fileUpload } type = "file" id = "section" /></label>
-                        <label className="custom-file-upload">Tickets Data CSV (Course Rank) <input onChange = { this.fileUpload } type = "file" id = "tickets" /></label>
-                        <label className="custom-file-upload">Student Data CSV (Student Rank) <input onChange = { this.fileUpload } type = "file" id = "student" /></label>
+                        <label className="custom-file-upload">Section Data CSV (Course Variant)<input onChange = { this.fileUpload } type = "file" id = "section" / ></label>
+                        <label className="custom-file-upload">Tickets Data CSV (Course Rank) <input onChange = { this.fileUpload } type = "file" id = "tickets" / ></label>
+                        <label className="custom-file-upload">Student Data CSV (Student Rank) <input onChange = { this.fileUpload } type = "file" id = "student" / ></label>
                     < /div>
             );
         }
 
     });
 
-var App = React.createClass({
+//<input style={ this.display(this.props.role) } onClick = { this.showOptionsModal } type = "button" value="Show Options" / >
+
+    var App = React.createClass({
 
         mixins: [ReactFireMixin],
 
