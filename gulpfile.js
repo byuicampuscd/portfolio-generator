@@ -59,7 +59,7 @@ gulp.task('styles', function () {
 Scripts for ES6 and React
 */
 gulp.task('scripts', function () {
-    return gulp.src([SCRIPTS_PATH])
+    return gulp.src(['./public/scripts/firebaseconfig.js', './public/scripts/login.js', SCRIPTS_PATH])
         .pipe(plumber(function (err) {
             console.log('Scripts Task Error ' + err);
             this.emit('end');
@@ -96,7 +96,7 @@ gulp.task('stylesPro', function () {
 
 //Scripts
 gulp.task('scriptsPro', function () {
-    return gulp.src([SCRIPTS_PATH])
+    return gulp.src(['./public/scripts/firebaseconfig.js', './public/scripts/login.js', SCRIPTS_PATH])
         .pipe(plumber(function (err) {
             console.log('Scripts Task Error ' + err);
             this.emit('end');
