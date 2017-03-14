@@ -14,6 +14,13 @@ var options = {
 
 };
 
+/************************************************************
+* name: check
+* desc: If sectionLists, ticketLists, and studentList exist 
+*       build quartiles.
+* inputs: none
+* outputs: none
+************************************************************/
 function check() {
     if (sectionLists && ticketLists && studentsList) buildQuartiles();
 }
@@ -31,6 +38,12 @@ var sectionReader = new CSV_Reader("section", data => {
         check();
     }, 0);
 
+/************************************************************
+* name: buildQuartiles
+* desc: 
+* inputs: none
+* outputs: none
+************************************************************/
 function buildQuartiles() {
 
     // tickets quartile
@@ -67,9 +80,14 @@ function buildQuartiles() {
     studentsQuartile = (new Quartile(students));
 
     rankData();
-
 }
 
+/************************************************************
+* name: rankData
+* desc: 
+* inputs: none
+* outputs: none
+************************************************************/
 function rankData() {
     var courses = [];
 

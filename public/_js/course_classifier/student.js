@@ -1,3 +1,6 @@
+/*************************************************************
+* Student class
+*************************************************************/
 var Student = function Student(name, full_time_weight, ticket_count){
     this.name = name;
     this.full_time_weight = full_time_weight;
@@ -5,8 +8,14 @@ var Student = function Student(name, full_time_weight, ticket_count){
     this.load = 0;
 }
 
-
-
+/************************************************************
+* name: getCapacity
+* desc: If capacity is undefined return a new capacity value
+*       otherwise determine and return capacity.
+* inputs: 
+*       student_quartile: quartile object?
+* outputs: student objects capacity
+************************************************************/
 Student.prototype.getCapacity = function (student_quartile) {
     if (!this.capacity) {
 
@@ -29,6 +38,14 @@ Student.prototype.getCapacity = function (student_quartile) {
     return this.capacity;
 }
 
+/**************************************************************
+* name: addCourse
+* desc: Adds a course to the students course list and adds the 
+*       courses score to the students load.
+* inputs: 
+*       course: course object to add
+* outputs: none
+**************************************************************/
 Student.prototype.addCourse = function(course){
     if(!this.courses) this.courses = [];
     this.courses.push(course);
@@ -36,6 +53,14 @@ Student.prototype.addCourse = function(course){
     this.load += course.getScore();
 }
 
+/**************************************************************
+* name: addDepartment
+* desc: ??
+* inputs: 
+*       course: department to add
+*       name: ??
+* outputs: none
+**************************************************************/
 Student.prototype.addDepartment = function(department, name){
     if(!this.load)this.load = 0;
     if(!this.courses)this.courses = {};

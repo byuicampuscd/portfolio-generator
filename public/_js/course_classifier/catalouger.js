@@ -2,13 +2,19 @@
 var studentData = {};
 var courseData = {};
 
-/*
- * This takes the raw csv object data and then categorizes it
- * Once the data has been categorized, it writes it to a csv file
- */
+/*******************************************************************
+* name: generatePortfolio
+* desc: This takes the raw csv object data and then categorizes it.
+*       Once the data has been categorized, it writes it to a csv file
+* inputs: 
+*       students: array of student objects
+*       courses: array of course objects
+* outputs: none
+*******************************************************************/
 function generatePortfolio(students, courses) {
+    
     var student_capacity;
-    var ca = 0;
+    var ca = 0; //??
 
     //sorts courses by department and takes out invalid characters
     for (var i in courses) {
@@ -23,6 +29,7 @@ function generatePortfolio(students, courses) {
         };
         courseData[`${courses[i].department}`].courses.push(courses[i]);
     }
+    
     // sorts students by their capacity
     var sa = 0;
     for (var i in students) {
@@ -86,7 +93,6 @@ function generatePortfolio(students, courses) {
                 dwn.click();
             }
         }, 50);
-
 
         for (var i in groups) {
             var group = groups[i];

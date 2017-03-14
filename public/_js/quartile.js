@@ -14,14 +14,21 @@ var Quartile = function Quartile(data_set) {
 //    console.log(this.data_set);
 }
 
-
-/*
- * This returns the specified quartile from the data set
- */
+/************************************************************
+* name: getQuartile
+* desc: This returns the specified quartile from the data set.
+* inputs: 
+*       quartile: number quartile
+* outputs: newQuartile
+************************************************************/
 Quartile.prototype.getQuartile = function (quartile) {
+    
     var median = this.getMedian(this.data_set);
+    
     if (quartile == 2) return median;
+    
     var newArray = [];
+    
     for (var i in this.data_set) {
         if (quartile == 1) {
             if (this.data_set[i] < median) newArray.push(this.data_set[i]);
@@ -35,33 +42,56 @@ Quartile.prototype.getQuartile = function (quartile) {
     return newQuartile;
 }
 
+/************************************************************
+* name: getFirstQuartile
+* desc: This returns the first quartile.
+* inputs: none
+* outputs: quartile
+************************************************************/
 Quartile.prototype.getFirstQuartile = function () {
     return this.getQuartile(1)
 }
 
+/************************************************************
+* name: getThirdQuartile
+* desc: This returns the third quartile.
+* inputs: none
+* outputs: quartile
+************************************************************/
 Quartile.prototype.getThirdQuartile = function () {
         return this.getQuartile(3)
 }
 
-/*
- * Returns the  Inner Quartile Range of the set
- */
+
+/************************************************************
+* name: getIQR
+* desc: Returns the  Inner Quartile Range of the set.
+* inputs: none
+* outputs: quartile
+************************************************************/
 Quartile.prototype.getIQR = function () {
     return this.getQuartile(3) - this.getQuartile(1);
 }
 
-/*
- * Determines if a number is an outlier in the set
- */
+/************************************************************
+* name: isOutlier
+* desc: Determines if a number is an outlier in the set.
+* inputs: 
+*       n: number to determine
+* outputs: boolean value
+************************************************************/
 Quartile.prototype.isOutlier = function (n) {
     var IQR = this.getIQR();
     return (n < this.getQuartile(1) - 1.5 * IQR || n > this.getQuartile(3) + 1.5 * IQR);
 }
 
-/*
- * This gives us the median of a given array or the median of the data set
- * if no array is given
- */
+/************************************************************
+* name: getMedian
+* desc: 
+* inputs: 
+*       data_set: ??
+* outputs: median
+************************************************************/
 Quartile.prototype.getMedian = function (data_set) {
         if (!data_set) data_set = this.data_set;
         if (!this.data_set) console.log("We are screwed!", this.data_set, data_set);
