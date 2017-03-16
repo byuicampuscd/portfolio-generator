@@ -17,7 +17,7 @@
 ### Overall Process
   1. Read CSV files
   
-  2. Combine new and old data
+  1. Combine new and old data
     drop students courses under below conditions
     
       - student ticket count has changed dramatically
@@ -27,11 +27,11 @@
       - class load/ticket count has changed
       - course no longer exists
       
-  3. Determine course weights and student capacities
+  1. Determine course weights and student capacities
   
-  4. Assign everything that is unassigned
+  1. Assign everything that is unassigned
   
-  5. Write new CSV files
+  1. Write new CSV files
 
 ### Objects
 ```
