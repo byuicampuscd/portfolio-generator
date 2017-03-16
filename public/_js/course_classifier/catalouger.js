@@ -107,9 +107,19 @@ function generatePortfolio(students, courses) {
         database.ref('portfolio/data').set(groups);
     });
 }
-/*
- * This assignes courses to students based of of their capacity and the max amount of courses that can be assigned to a student
- */
+
+/*******************************************************************
+* name: sort3
+* desc: This assignes courses to students based of of their capacity
+*       and the max amount of courses that can be assigned to a 
+*       student.
+* inputs: 
+*       course_data: array of arrays of courses
+*       student_capacity: a students capacity
+*       studentData: some sort of array
+*       students: some sort of length - studentData related
+* outputs: none
+*******************************************************************/
 function sort3(course_data, student_capacity, studentData, students) {
     var pool = [];
     var used = {};
@@ -176,6 +186,7 @@ function sort3(course_data, student_capacity, studentData, students) {
         }
         return groups;
     }
+    
     for (var i in course_data)
         for (var j in course_data[i].courses)
             pool.push(course_data[i].courses[j]);
@@ -198,7 +209,13 @@ function sort3(course_data, student_capacity, studentData, students) {
     console.log("Amount Assigned: "+total);
 }
 
-
+/*******************************************************************
+* name: sortStudents
+* desc: sorts the students
+* inputs: 
+*       students:
+* outputs: none
+*******************************************************************/
 function sortStudents(students) {
     var courses = students;
     courses.sort((a, b) => {
@@ -219,12 +236,26 @@ function sortStudents(students) {
     students = capacity;
 }
 
+/*******************************************************************
+* name: scoreDepartment
+* desc: Makes the score of the department the total of the scores 
+*       from the courses in that department.
+* inputs: 
+*       department: array of courses?
+* outputs: none
+*******************************************************************/
 function scoreDepartment(department) {
     var score = 0;
     for (var i in department.courses) score += department.courses[i].score;
     department.score = score;
 }
 
+/*******************************************************************
+* name: getTotalCourses
+* desc: Determines the number of courses.
+* inputs: none
+* outputs: totalCourses
+*******************************************************************/
 function getTotalCourses() {
     var totalCourses = 0;
     for (var i in courseData)
@@ -234,18 +265,38 @@ function getTotalCourses() {
     return totalCourses;
 }
 
+/*******************************************************************
+* name: getTotalStudents
+* desc: gets total number of students
+* inputs: none
+* outputs: totalStudents
+*******************************************************************/
 function getTotalStudents() {
     var totalStudents = 0;
     for (var i in studentData) totalStudents += studentData[i].length;
     return totalStudents;
 }
 
+/*******************************************************************
+* name: sizeOf
+* desc: returns the size of the array
+* inputs: 
+*       object: array of some sort
+* outputs: size
+*******************************************************************/
 function sizeOf(object) {
     var size = 0;
     for (var i in object) size++;
     return size;
 }
 
+/*******************************************************************
+* name: getIndexes
+* desc: it seems like its just returning a copy 
+* inputs: 
+*       object:
+* outputs: index
+*******************************************************************/
 function getIndexes(object) {
     var index = [];
     for (var i in object) index.push(i)
