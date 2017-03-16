@@ -49,6 +49,7 @@ studentObj {
                          //if decreased drop some courses
   ticketCount: number    //from new student CSV, if increased a lot drop courses - maybe
   courses: objects       //from last semester CSV
+  team: number           //from last semester CSV
   assigned: number       //maybe 0-false, 1-true, 2-partial
 }
 ```
