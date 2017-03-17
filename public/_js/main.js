@@ -40,13 +40,14 @@ var sectionReader = new CSV_Reader("section", data => {
 
 /************************************************************
 * name: buildQuartiles
-* desc: 
+* desc: Makes quartiles for number of sections, students 
+*       tickets, and course tickets.
 * inputs: none
 * outputs: none
 ************************************************************/
 function buildQuartiles() {
 
-    // tickets quartile
+    //making array of course tickets
     var tickets = [];
     for (var i in ticketLists) {
         var j = parseInt(ticketLists[i][options.ticketsColumn]);
@@ -54,9 +55,10 @@ function buildQuartiles() {
             tickets.push(j);
     }
 
+    //make course tickets quartile
     ticketsQuartile = (new Quartile(tickets));
 
-    //sections quartile
+    //making array of numbers of sections
     var sections = [];
     for (var i in sectionLists) {
         var j = parseInt(sectionLists[i][options.sectionsColumn]);
@@ -64,9 +66,10 @@ function buildQuartiles() {
             sections.push(j);
     }
 
+    //make sections quartile
     sectionsQuartile = (new Quartile(sections));
 
-    //students quartile
+    //making array of students tickets
     var students = [];
     for (var i in studentsList) {
         if (i != undefined) {
@@ -77,6 +80,7 @@ function buildQuartiles() {
         }
     }
 
+    //make students tickets quartile
     studentsQuartile = (new Quartile(students));
 
     rankData();
@@ -89,6 +93,8 @@ function buildQuartiles() {
 * outputs: none
 ************************************************************/
 function rankData() {
+    
+    //make course object array
     var courses = [];
 
     for (var i in sectionLists) {
@@ -100,13 +106,15 @@ function rankData() {
         courses.push(new Course(i, sectionLists[i]["Email"], sectionLists[i].Sections, ticketLists[i][options.ticketsColumn], sectionLists[i].Department_Name));
     }
 
+    //make student object array
     var students = [];
 
     for (var i in studentsList) {
 
         students.push(new Student(i, studentsList[i]["Full Time Weight"], studentsList[i][options.studentColumn]));
     }
-
+    
+    //I think this ranks everything
     generatePortfolio(students, courses);
 
 }
