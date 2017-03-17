@@ -5,14 +5,13 @@
 1. Course leads work with **one** student
 1. Students stay in the same teams
 
-### CSV's needed:
-* Old Student Rank
-* Old Course Rank
-* Old Course Varient List
-* New Student Rank
-* New Course Rank
-* New Course Varient List
-* All Last Semester Team CSV's
+### To Do
+#### Files to be redone
+* main
+* catalouger
+#### Files to be altered
+* course
+* student  
 
 ### Overall Process
   1. Read CSV files
@@ -32,6 +31,18 @@
   1. Assign everything that is unassigned
   
   1. Write new CSV files
+  
+### main - Pseudo Code
+```
+Read files
+Make quartiles
+Rank data
+```
+
+### catalouger - Pseudo Code
+```
+Generate portfolio
+```
 
 ### Objects
 ```
@@ -53,5 +64,12 @@ studentObj {
   assigned: number       //maybe 0-false, 1-true, 2-partial
 }
 ```
-  
-  
+    
+### CSV's needed:
+* Old Student Rank
+* Old Course Rank
+* Old Course Varient List
+* New Student Rank
+* New Course Rank
+* New Course Varient List
+* All Last Semester Team CSV's
