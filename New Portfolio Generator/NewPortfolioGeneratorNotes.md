@@ -1,9 +1,9 @@
 ## New Portfolio Generator Notes
 
 ### Today
-1. figure out catalouger
-1. see if we can write one file with all teams in one
-1. figure out how many readers we need
+1. figure out catalouger -- it's rough
+1. see if we can write one file with all teams in one -- I believe it's possible
+1. figure out how many readers we need -- min 7, max 10 :(
 1. figure out logic for if statements
 
 ### Goals
@@ -31,6 +31,7 @@
       - course lead changed
       - class load/ticket count has changed
       - course no longer exists
+      - dramatically different ammount of sections
       
   1. Determine course weights and student capacities
   
@@ -49,7 +50,12 @@ Rank data
 ```
 Generate portfolio
 ```
+### combine data - Pseudo Code
+```
+combineData(newSectionList, newTicketList, newStudentList, oldSectionList, oldTicketList, oldStudent List, lastSemester) {
 
+
+```
 ### Objects
 ```
 courseObj {
