@@ -1,5 +1,11 @@
 ## New Portfolio Generator Notes
 
+### Today
+1. figure out catalouger
+1. see if we can write one file with all teams in one
+1. figure out how many readers we need
+1. figure out logic for if statements
+
 ### Goals
 1. Students keep their courses from last semester
 1. Course leads work with **one** student
@@ -73,3 +79,5 @@ studentObj {
 * New Course Rank
 * New Course Varient List
 * All Last Semester Team CSV's
+  - can fill everything in course array except course sections number
+  - four files :(
