@@ -63,7 +63,6 @@ studentObj {
   team: number           //from last semester CSV
   assigned: number       //maybe 0-false, 1-true, 2-partial
 }
-<<<<<<< HEAD
 ```
 =======
 ```
@@ -76,4 +75,3 @@ studentObj {
 * New Course Rank
 * New Course Varient List
 * All Last Semester Team CSV's
->>>>>>> a14619067c44fcf6a78a33fa726004a5a85f9904
