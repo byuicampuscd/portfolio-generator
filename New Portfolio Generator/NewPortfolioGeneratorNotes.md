@@ -64,8 +64,6 @@ studentObj {
   assigned: number       //maybe 0-false, 1-true, 2-partial
 }
 ```
-=======
-```
     
 ### CSV's needed:
 * Old Student Rank
