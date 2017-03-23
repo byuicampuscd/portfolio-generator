@@ -37,11 +37,11 @@ Make quartiles
 Rank data
 ```
 
-### catalouger - Pseudo Code
+### assign - Pseudo Code
 ```
 Generate portfolio
 ```
-### combine data - Pseudo Code
+### updateData - Pseudo Code
 ```
 combineData(currentSectionList, 
             currentTicketList, 
@@ -117,13 +117,14 @@ courseObj {
 
 studentObj {
   name: string           //from new student CSV, if gone drop courses and delete student
+  maxCapacity: number
+  currentCapacity: number
   fullTimeWeight: number //from new student CSV, if increased set student to unassigned
                          //if decreased drop some courses
   ticketCount: number    //from new student CSV, if increased a lot drop courses - maybe
-  courses: objects       //from last semester CSV
+  teachers: objects       //from last semester CSV
   team: number           //from last semester CSV
-  assigned: number       //maybe 0-false, 1-true, 2-partial
-}
+  assigned: bool        
 ```
     
 ### CSV's needed:
