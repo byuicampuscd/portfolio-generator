@@ -15,14 +15,16 @@
   
   1. Combine new and old data
     drop students courses under below conditions
-    
-      - student ticket count has changed dramatically
+       needeperately account for
+      - course ro longer exists
       - student has left
-      - student full time weight has changed
       - course lead changed
-      - class load/ticket count has changed
-      - course no longer exists
+    * the math will account for these
+      - student ticket count has changed dramatically
+      - student full time weight has changed
       - dramatically different ammount of sections
+      - class load/ticket count has changed
+      
       
   1. Determine teacher weights and student capacities
   
