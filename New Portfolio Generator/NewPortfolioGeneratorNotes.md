@@ -29,12 +29,14 @@
   
   1. Write new CSV files
   
-### main - Pseudo Code
-```
-Read files
-Make objects
-Rank data
-```
+### All Functions Pseudo Code
+  1. Read files
+     
+  1. Make Students
+  1. Determine Weights and Capacities
+  1. Make Teachers
+  1. Assign
+  1. Write Files
 
 ### updateData - Pseudo Code
 ```
