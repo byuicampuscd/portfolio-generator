@@ -107,3 +107,7 @@ studentObj {
 * New Course Rank
 * New Course Varient List
 * All Last Semester Team CSV's
+
+### NPM
+* stats-collector
+* d3-dsv
