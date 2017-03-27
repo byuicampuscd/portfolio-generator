@@ -1,121 +1,63 @@
-//arrays
-var sectionLists,
-    ticketLists,
-    studentsList;
+/*eslint-env node*/
+/*eslint no-console:0*/
 
-var sectionsQuartile,
-    ticketsQuartile,
-    studentsQuartile;
-
-var options = {
-    sectionsColumn: "Sections",
-    ticketsColumn: "Ticket Count\r",
-    studentColumn: "Ticket Count\r",
-    shifts: 5,
-
-};
-
-/************************************************************
-* name: check
-* desc: If sectionLists, ticketLists, and studentList exist 
-*       build quartiles.
-* inputs: none
-* outputs: none
-************************************************************/
-function check() {
-    if (sectionLists && ticketLists && studentsList) buildQuartiles();
+/*********************************************************
+* name: read
+* desc: Reads the CSV's using d3-dsv. Makes objects arrays
+*       with CSV info. Read d3-dsv for more info.
+*********************************************************/
+function read() {
+//may use d3-dsv's built in function to fill basic info
 }
 
-var sectionReader = new CSV_Reader("section", data => {
-        sectionLists = data;
-        check();
-    }, 2),
-    studentReader = new CSV_Reader("student", data => {
-        studentsList = data;
-        check();
-    }, 0),
-    ticketReader = new CSV_Reader("tickets", data => {
-        ticketLists = data;
-        check();
-    }, 0);
-
-/************************************************************
-* name: buildQuartiles
-* desc: Makes quartiles for number of sections, students 
-*       tickets, and course tickets.
-* inputs: none
-* outputs: none
-************************************************************/
-function buildQuartiles() {
-
-    //making array of course tickets
-    var tickets = [];
-    for (var i in ticketLists) {
-        var j = parseInt(ticketLists[i][options.ticketsColumn]);
-        if (j)
-            tickets.push(j);
-    }
-
-    //make course tickets quartile
-    ticketsQuartile = (new Quartile(tickets));
-
-    //making array of numbers of sections
-    var sections = [];
-    for (var i in sectionLists) {
-        var j = parseInt(sectionLists[i][options.sectionsColumn]);
-        if (j)
-            sections.push(j);
-    }
-
-    //make sections quartile
-    sectionsQuartile = (new Quartile(sections));
-
-    //making array of students tickets
-    var students = [];
-    for (var i in studentsList) {
-        if (i != undefined) {
-            var j = parseInt(studentsList[i][options.studentColumn]);
-
-            if (j >= 0)
-                students.push(j);
-        }
-    }
-
-    //make students tickets quartile
-    studentsQuartile = (new Quartile(students));
-
-    rankData();
+/*********************************************************
+* name: makeStudents
+* desc: Turns CSV object arrays into a functioning student 
+*       object array.
+*********************************************************/
+function makeStudents() {
+    
 }
 
-/************************************************************
-* name: rankData
-* desc: 
-* inputs: none
-* outputs: none
-************************************************************/
-function rankData() {
+/*********************************************************
+* name: doMath
+* desc: Determines the capacities of the students and the
+*       weights of the teachers.
+*********************************************************/
+function doMath() {
+//won't need it's own file for now
+    //determine overall//average capacity and weight info
     
-    //make course object array
-    var courses = [];
-
-    for (var i in sectionLists) {
-
-        if (!ticketLists[i]) {
-            ticketLists[i] = {};
-            ticketLists[i][options.ticketsColumn] = ticketsQuartile.getMedian();
-        }
-        courses.push(new Course(i, sectionLists[i]["Email"], sectionLists[i].Sections, ticketLists[i][options.ticketsColumn], sectionLists[i].Department_Name));
-    }
-
-    //make student object array
-    var students = [];
-
-    for (var i in studentsList) {
-
-        students.push(new Student(i, studentsList[i]["Full Time Weight"], studentsList[i][options.studentColumn]));
-    }
+    //loop calling students getCapacity function
     
-    //I think this ranks everything
-    generatePortfolio(students, courses);
+    //loop calling students teachers getWeightFunction
+    
+    //loop calling teachers getWeight function
+}
 
+/*********************************************************
+* name: makeTeachers
+* desc: Technically makeStudents starts making the teachers 
+*       and this function finishes. Makes functioning 
+*       teacher objects array.
+*********************************************************/
+function makeTeachers() {
+    
+}
+
+/*********************************************************
+* name: assign
+* desc: Assigns remaining teachers to the remaining students.
+*       Makes teams somehow.
+*********************************************************/
+function assign() {
+    
+}
+
+/*********************************************************
+* name: write
+* desc: Uses the students array and or teams to make CSV's
+*********************************************************/
+function write() {
+    
 }
