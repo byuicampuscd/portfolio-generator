@@ -1,6 +1,7 @@
 /*eslint-env node*/
 /*eslint no-console:0*/
 
+
 /*********************************************************
 * name: read
 * desc: Reads the CSV's using d3-dsv. Makes objects arrays
@@ -8,6 +9,9 @@
 *********************************************************/
 function read() {
 //may use d3-dsv's built in function to fill basic info
+    var dsv = require("d3-dsv");
+    var courseTickets = dsv.csvParseRows("/Test CSV/Course Rank.csv");
+
 }
 
 /*********************************************************
