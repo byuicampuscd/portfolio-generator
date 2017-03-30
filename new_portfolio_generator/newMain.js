@@ -1,6 +1,15 @@
 /*eslint-env node*/
 /*eslint no-console:0*/
+    
+//include d3-dsv for reading files
+var d3Dsv = require('d3-dsv');
+var fs = require('fs');
 
+//global students
+var students = 0;
+var courseRankCSV = 0;
+var courseInfoCSV = 0;
+var lastSemesterCSV = 0;
 
 /*********************************************************
 * name: read
@@ -8,19 +17,44 @@
 *       with CSV info. Read d3-dsv for more info.
 *********************************************************/
 function read() {
-//may use d3-dsv's built in function to fill basic info
-    var dsv = require("d3-dsv");
-    var courseTickets = dsv.csvParseRows("/Test CSV/Course Rank.csv");
+    studentContents = fs.readFileSync('\Test_CSV/\/Student Rank (Sept 30).csv').toString();
+    courseRankContents = fs.readFileSync('\Test_CSV/\/Course Rank.csv').toString();
+    courseInfoContents = fs.readFileSync('\Test_CSV/\/Course Variant List.csv').toString();
 
+    //start of student object array
+    /*students = d3Dsv.csvParse(studentContents, function(data) {
+        return new Student(data.PrimResp, data.FullTimeWeight, data.TicketCount);
+    });*/
+    
+    //makes the rest of the CSV's file object arrays
+    /*courseInfoCSV = d3Dsv.csvParse(courseInfoContents, function(data) {
+        return new Course(data.Course, data.Email, data.Sections, data.Department_Name);
+    });*/
+    
+    courseRankCSV = d3Dsv.csvParse(courseRankContents);
+  
+    //var lastSemesterCSV = d3Dsv.cvsParse();
+    
+    console.log(courseRankCSV);
+    console.log(courseInfoCSV);
 }
 
 /*********************************************************
-* name: makeStudents
-* desc: Turns CSV object arrays into a functioning student 
-*       object array.
-*********************************************************/
-function makeStudents() {
-    
+* name: updateCourseInfo
+* desc: Updates courses on oldCsv with currentCourse CSV 
+*       then assigns it to student object array.
+* input: 
+*       oldStudentCSV: object array
+*       currentCoursesCSV: object array
+*       students: student object array
+* output: updated students
+**********************************************************/
+function updateCourseInfo() {
+    //go through old students courses
+    //find matching courses on course list
+    //add matching course list to temp course list
+    //go through temp course list and make teachers
+    //find matching new student and add teachers to new student
 }
 
 /*********************************************************
@@ -65,3 +99,5 @@ function assign() {
 function write() {
     
 }
+
+read();
