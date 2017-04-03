@@ -29,14 +29,44 @@
   
   1. Write new CSV files
   
-### All Functions Pseudo Code
-  1. Read files
-     
-  1. Make Students
-  1. Determine Weights and Capacities
-  1. Make Teachers
-  1. Assign
-  1. Write Files
+### Pseudo Code
+1. Read CSV's
+   * d3-dsv 
+1. Remove old students/start teachers array
+   * If student is gone release courses
+       - update course info
+       - find current teachers
+       - make and add to new teacher array
+1. Make students array 
+   * Assign current student info
+1. Update and add students courses/teachers info
+   * find students courses/teachers in current courses
+       - if course is gone remove it 
+       - update course info and add it to student
+1. Determine sttudent capacities
+   * general
+       - #courses/#students
+   * specific
+       - each shudent based off of
+           * full time weight
+           * #tickets
+1. Determine teacher weights
+   * loop through teachers
+       - based off of 
+           * #sections
+           * #tickets
+1. Break teacher weights
+   * Go through capacities and weights
+       - if current capacity is greater than max capacity
+           * release the least amount of teachers to match current and max capacity
+           * released teachers are put in teachers array
+1. Assign remaining teachers to students
+   * Sort teachers (highest weight at the top)
+   * Sort Students (highest capacities at the top)
+   * Loop through students
+       - give students teachers that don't push them over student max capacity
+1. Do team stuff?
+1. Write csv's?
 
 ### updateData - Pseudo Code
 ```
