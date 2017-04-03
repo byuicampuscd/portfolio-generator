@@ -4,13 +4,11 @@
         <title>Quartile</title>
     </head>
     <body>
-        <script src="node_modules/d3-dsv/build/d3-dsv.js"></script>
+        $ browserify newMain.js > bundle.js
         <script src="student.js"></script>
         <script src="teacher.js"></script>
-        <script src="newMain.js"></script>
-        <input id="id" value="">
-        <button id="button">sort</button>
-        <a href="" id="downloader" download></a>
+        <script src="bundle.js"></script>
+
 <!--        <canvas id="can"></canvas>-->
     </body>
 </html>

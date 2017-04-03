@@ -46,11 +46,11 @@ Teacher.prototype.removeCourse = function(course) {
 * name: Course
 * desc: Course class
 *********************************************************/
-var Course = function Course(name, course_lead, section, ticket, department /*optional*/ ) {
+var Course = function Course(name, course_lead, section, department /*optional*/ ) {
     this.name = name;
     this.courseLead = course_lead;
     this.section = section;
-    this.ticket = ticket;
+    this.ticket = 0;
     this.weight = this.determineCourseWeight();
     if (department) this.department = department;
 }
