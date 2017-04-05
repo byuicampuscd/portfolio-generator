@@ -28,11 +28,13 @@ var Course = function Course(name, teacher, sections, department /*optional*/ ) 
     this.sections = sections;
     this.oldStudent = 0;
     this.ticket = 0;
-    this.weight = 0;   
+    this.weight = 0;  
+    this.assigned = false;
 }
 
-var Teacher = function(name) {
+var Teacher = function(name, oldStudent) {
     this.name = name;
+    this.oldStudent = oldStudent;
     this.courses = [];
     this.weight = 0;
 }
@@ -92,22 +94,14 @@ function updateCourseInfo() {
     
     //teachers
     var tempTeacher = 0;
+    var hasCourses = true;
     //console.log(courses);
     //console.log(courses);
-    for (i = 0; i < courses.length; i++) {
-        tempTeacher = new Teacher(courses[i].teacher)
-        //console.log(tempTeacher);
-        for (j = i; j < courses.length; j++) {
-            if ((courses[i].teacher === courses[j].teacher) &&
-                (courses[i].oldStudent === courses[j].oldStudent)) {
-                //console.log(courses[j]);
-                tempTeacher.courses.push(courses[j]);
-                courses.splice(j, 1);
-            } 
+    /*for (i = 0; i < courses.length; i++) {
+        for (j = i + 1; j < courses.length; j++) {
+            
         }
-        teachers.push(tempTeacher);
-    }
-    console.log("teachers:", teachers);
+    }*/
     //console.log(courses);
     //give students teachers
     /*for (i = 0; i < students.length; i++) {
