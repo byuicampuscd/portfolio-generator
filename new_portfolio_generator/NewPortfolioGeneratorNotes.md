@@ -5,9 +5,10 @@
 1. Course leads work with **one** student
 1. Students stay in the same teams
 
-### To Do
-* Figure out how we want to determine weights and capacities
-* make a readable last semester csv 
+### Multiple Knapsack Problem Resources
+* https://www.npmjs.com/package/knapsack-js
+* https://en.m.wikipedia.org/wiki/Knapsack_problem
+* https://github.com/thedanschmidt/multiknapsack.js/blob/master/src/multiknapsack.js
 
 ### Overall Process
   1. Read CSV files
