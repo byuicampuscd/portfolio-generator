@@ -92,43 +92,50 @@ function updateCourseInfo() {
         }
     }
     
-    //teachers
-    var tempTeacher = 0;
-    var hasCourses = true;
-    //console.log(courses);
-    //console.log(courses);
-    /*for (i = 0; i < courses.length; i++) {
+    //make array of teacher names
+    var teacherList = [];
+    var add = true;
+    for (i = 0; i < courses.length; i++) {
+        add = true;
         for (j = i + 1; j < courses.length; j++) {
-            
+            if (courses[i].teacher === courses[j].teacher && 
+                courses[i].oldStudent === courses[j].oldStudent) {
+                add = false;
+            }
         }
-    }*/
-    //console.log(courses);
+        if (add) {
+            teacherList.push({"teacher": courses[i].teacher, "student": courses[i].oldStudent});
+        }
+    }
+ 
+    
+    //make teacher object array
+    var tempTeacher = 0;
+    for(i = 0; i < teacherList.length; i++) {
+        tempTeacher = new Teacher(teacherList[i].teacher, teacherList[i].student);
+        for(j = 0; j < courses.length; j++) {
+            if(teacherList[i].teacher === courses[j].teacher && 
+                teacherList[i].student === courses[j].oldStudent) {
+                tempTeacher.courses.push(courses[j]);
+            }
+        }
+        teachers.push(tempTeacher);
+    }
+
+    
     //give students teachers
-    /*for (i = 0; i < students.length; i++) {
+    for (i = 0; i < students.length; i++) {
         for(j = 0; j < teachers.length; j++) {
             if (students[i].name === teachers[j].oldStudent) {
                 students[i].teachers.push(teachers[j]);
+                teachers.splice(j, 1);
+                j--;
             }
         }
-    }*/
+    }
 
-    //console.log(students);
-    //find matching courses on course list
-    //add matching course list to temp course list
-    //go through temp course list and make teachers
-    //find matching new student and add teachers to new student
-        //go through students
-                /*for (var k = 0; k < students.length; k++) {
-                    //if students matches add course to student
-                    if (oldCourses[i].Student === students[k].name) {
-                        students[k].teachers.push(courses[j]);
-                    }
-                    else {
-                        console.log("error");
-                    }
-                }*/
-    //console.log(students);
-    
+    console.log(teachers);
+    console.log(students);
 }
 
 /*********************************************************
