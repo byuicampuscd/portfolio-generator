@@ -6,9 +6,11 @@
 1. Students stay in the same teams
 
 ### Multiple Knapsack Problem Resources
-* https://www.npmjs.com/package/knapsack-js
+* https://www.npmjs.com/package/knapsack-js - one knapsack
 * https://en.m.wikipedia.org/wiki/Knapsack_problem
 * https://github.com/thedanschmidt/multiknapsack.js/blob/master/src/multiknapsack.js
+* https://www.npmjs.com/package/bin-packer
+* https://www.npmjs.com/package/boxpack - all bins are the same size
 
 ### Overall Process
   1. Read CSV files
