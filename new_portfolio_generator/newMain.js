@@ -26,15 +26,15 @@ var Course = function Course(name, teacher, sections, department /*optional*/ ) 
     if (department) this.department = department;
     this.teacher = teacher;
     this.sections = sections;
-    this.oldStudent = 0;
+    this.assignedStudent = 0;
     this.ticket = 0;
     this.weight = 0;  
     this.assigned = false;
 }
 
-var Teacher = function(name, oldStudent) {
+var Teacher = function(name, assignedStudent) {
     this.name = name;
-    this.oldStudent = oldStudent;
+    this.assignedStudent = assignedStudent;
     this.courses = [];
     this.weight = 0;
 }
@@ -61,9 +61,7 @@ function read() {
     });
     
     courseRank = d3Dsv.csvParse(courseRankContents);
-    oldCourses = d3Dsv.csvParse(lastSemester);
-    
-   
+    oldCourses = d3Dsv.csvParse(lastSemester);  
 }
 
 /*********************************************************
@@ -78,7 +76,7 @@ function read() {
 **********************************************************/
 function updateCourseInfo() {
     
-    //update course objects ticket number and old student
+    //update course objects ticket number and assigned student
     for (var i = 0; i < courses.length; i++) {
         for (var j = 0; j < courseRank.length; j++) {
             if (courses[i].name === courseRank[j].Course) {
@@ -87,7 +85,7 @@ function updateCourseInfo() {
         }
         for (var k = 0; k < oldCourses.length; k++) {
             if (courses[i].name === oldCourses[k].Course) {
-                courses[i].oldStudent = oldCourses[k].Student;
+                courses[i].assignedStudent = oldCourses[k].Student;
             }
         }
     }
@@ -99,15 +97,14 @@ function updateCourseInfo() {
         add = true;
         for (j = i + 1; j < courses.length; j++) {
             if (courses[i].teacher === courses[j].teacher && 
-                courses[i].oldStudent === courses[j].oldStudent) {
+                courses[i].assignedStudent === courses[j].assignedStudent) {
                 add = false;
             }
         }
         if (add) {
-            teacherList.push({"teacher": courses[i].teacher, "student": courses[i].oldStudent});
+            teacherList.push({"teacher": courses[i].teacher, "student": courses[i].assignedStudent});
         }
     }
- 
     
     //make teacher object array
     var tempTeacher = 0;
@@ -115,27 +112,23 @@ function updateCourseInfo() {
         tempTeacher = new Teacher(teacherList[i].teacher, teacherList[i].student);
         for(j = 0; j < courses.length; j++) {
             if(teacherList[i].teacher === courses[j].teacher && 
-                teacherList[i].student === courses[j].oldStudent) {
+                teacherList[i].student === courses[j].assignedStudent) {
                 tempTeacher.courses.push(courses[j]);
             }
         }
         teachers.push(tempTeacher);
     }
-
     
     //give students teachers
     for (i = 0; i < students.length; i++) {
         for(j = 0; j < teachers.length; j++) {
-            if (students[i].name === teachers[j].oldStudent) {
+            if (students[i].name === teachers[j].assignedStudent) {
                 students[i].teachers.push(teachers[j]);
                 teachers.splice(j, 1);
                 j--;
             }
         }
     }
-
-    console.log(teachers);
-    console.log(students);
 }
 
 /*********************************************************
