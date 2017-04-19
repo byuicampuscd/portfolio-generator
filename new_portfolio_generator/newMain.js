@@ -12,10 +12,10 @@ var courseRank = 0;
 var courses = 0;
 var oldCourses = 0;
 
-var Student = function Student(name, full_time_weight, ticket_count){
+var Student = function Student(name, fullTimeWeight, tickets){
     this.name = name;
-    this.fullTimeWeight = full_time_weight;
-    this.ticketCount = ticket_count;
+    this.fullTimeWeight = fullTimeWeight;
+    this.ticketCount = tickets;
     this.currentCapacity = 0;
     this.maxCapacity = 0;
     this.teachers = [];
@@ -27,8 +27,8 @@ var Course = function Course(name, teacher, sections, department /*optional*/ ) 
     this.teacher = teacher;
     this.sections = sections;
     this.assignedStudent = 0;
-    this.ticket = 0;
-    this.weight = 0;  
+    this.tickets = 0;
+    this.fixes = 0;  
     this.assigned = false;
 }
 
@@ -40,43 +40,33 @@ var Teacher = function(name, assignedStudent) {
 }
 
 /*********************************************************
-* name: read
-* desc: Reads the CSV's using d3-dsv. Makes objects arrays
-*       with CSV info. Read d3-dsv for more info.
+* name: makeStudentsAndCourses
+* desc: Reads the CSV's using d3-dsv. Makes object arrays
+*       with CSV info. Read d3-dsv for more info. Also 
+*       updates courses to have its needed data
 *********************************************************/
-function read() {
+function makeStudentsAndCourses() {
     //read files
     var studentContents = fs.readFileSync('\Test_CSV/\/Student Rank (Sept 30).csv').toString();
     var courseRankContents = fs.readFileSync('\Test_CSV/\/Course Rank.csv').toString();
     var courseInfoContents = fs.readFileSync('\Test_CSV/\/Course Variant List.csv').toString();
     var lastSemester = fs.readFileSync('\Test_CSV/\/lastSemester.csv').toString();
 
-    //turn CSV strings into object arrays
+    //start student object array
     students = d3Dsv.csvParse(studentContents, function(data) {
         return new Student(data.PrimResp, data.FullTimeWeight, data.TicketCount);
     });
     
+    //start course object array
     courses = d3Dsv.csvParse(courseInfoContents, function(data) {
         return new Course(data.Course, data.Email, data.Sections, data.Department_Name);
     });
     
+    //make remaining csv's into object arrays
     courseRank = d3Dsv.csvParse(courseRankContents);
     oldCourses = d3Dsv.csvParse(lastSemester);  
-}
-
-/*********************************************************
-* name: updateCourseInfo
-* desc: Updates courses on oldCsv with currentCourse CSV 
-*       then assigns it to student object array.
-* input: 
-*       oldStudentCSV: object array
-*       currentCoursesCSV: object array
-*       students: student object array
-* output: updated students
-**********************************************************/
-function updateCourseInfo() {
     
-    //update course objects ticket number and assigned student
+    //update course objects so that they have a ticket number and an assigned student
     for (var i = 0; i < courses.length; i++) {
         for (var j = 0; j < courseRank.length; j++) {
             if (courses[i].name === courseRank[j].Course) {
@@ -89,13 +79,26 @@ function updateCourseInfo() {
             }
         }
     }
+}
+
+/*********************************************************
+* name: makeTeachers
+* desc: Combines courses together into the corresponding new
+*       teacher objects.
+* input: 
+*       oldStudentCSV: object array
+*       currentCoursesCSV: object array
+*       students: student object array
+* output: updated students
+**********************************************************/
+function makeTeachers() {
     
-    //make array of teacher names
+    //make array of teacher names including broken teachers
     var teacherList = [];
     var add = true;
-    for (i = 0; i < courses.length; i++) {
+    for (var i = 0; i < courses.length; i++) {
         add = true;
-        for (j = i + 1; j < courses.length; j++) {
+        for (var j = i + 1; j < courses.length; j++) {
             if (courses[i].teacher === courses[j].teacher && 
                 courses[i].assignedStudent === courses[j].assignedStudent) {
                 add = false;
@@ -118,17 +121,7 @@ function updateCourseInfo() {
         }
         teachers.push(tempTeacher);
     }
-    
-    //give students teachers
-    for (i = 0; i < students.length; i++) {
-        for(j = 0; j < teachers.length; j++) {
-            if (students[i].name === teachers[j].assignedStudent) {
-                students[i].teachers.push(teachers[j]);
-                teachers.splice(j, 1);
-                j--;
-            }
-        }
-    }
+
 }
 
 /*********************************************************
@@ -153,8 +146,17 @@ function doMath() {
 *       and this function finishes. Makes functioning 
 *       teacher objects array.
 *********************************************************/
-function makeTeachers() {
-    
+function trimOffExcess() {
+    //give students teachers
+    for (var i = 0; i < students.length; i++) {
+        for(var j = 0; j < teachers.length; j++) {
+            if (students[i].name === teachers[j].assignedStudent) {
+                students[i].teachers.push(teachers[j]);
+                teachers.splice(j, 1);
+                j--;
+            }
+        }
+    }
 }
 
 /*********************************************************
@@ -162,7 +164,7 @@ function makeTeachers() {
 * desc: Assigns remaining teachers to the remaining students.
 *       Makes teams somehow.
 *********************************************************/
-function assign() {
+function assignRemaining() {
     
 }
 
