@@ -11,32 +11,41 @@ var teachers =[];
 var courseRank = 0;
 var courses = 0;
 var oldCourses = 0;
-
-var Student = function Student(name, fullTimeWeight, tickets){
+class Animal {
+    
+}
+//Student class
+var Student = function Student(name, fullTimeWeight, tickets) {
     this.name = name;
     this.fullTimeWeight = fullTimeWeight;
     this.ticketCount = tickets;
     this.currentCapacity = 0;
     this.maxCapacity = 0;
     this.teachers = [];
+    
 }
 
-var Course = function Course(name, teacher, sections, department /*optional*/ ) {
+//Course class
+var Course = function Course(name, teacher, sections, department /*optional*/ ) {   
     this.name = name;
     if (department) this.department = department;
     this.teacher = teacher;
     this.sections = sections;
     this.assignedStudent = 0;
-    this.tickets = 0;
-    this.fixes = 0;  
+    this.tickets = 0; 
     this.assigned = false;
 }
 
-var Teacher = function(name, assignedStudent) {
+//Teacher class
+var Teacher = function Teacher(name, assignedStudent) {
     this.name = name;
     this.assignedStudent = assignedStudent;
     this.courses = [];
-    this.weight = 0;
+    this.weight = 0; 
+    
+    function calculateWeight() {
+        this.courses.reduce();
+    }
 }
 
 /*********************************************************
@@ -130,6 +139,8 @@ function makeTeachers() {
 *       weights of the teachers.
 *********************************************************/
 function doMath() {
+    
+    console.log(students[0].calculateCapacity());
 //won't need it's own file for now
     //determine overall//average capacity and weight info
     
@@ -176,5 +187,6 @@ function write() {
     
 }
 
-read();
-updateCourseInfo();
+makeStudentsAndCourses();
+makeTeachers();
+doMath();
