@@ -5,24 +5,22 @@
 var d3Dsv = require('d3-dsv');
 var fs = require('fs');
 
-//global students
+//global variables
 var students = 0;
 var teachers =[];
 var courseRank = 0;
 var courses = 0;
 var oldCourses = 0;
-class Animal {
-    
-}
+
 //Student class
-var Student = function Student(name, fullTimeWeight, tickets) {
+var Student = function Student(name, lastWeight, currentWeight, tickets) {
     this.name = name;
-    this.fullTimeWeight = fullTimeWeight;
+    this.lastTimeWeight = lastWeight;
+    this.currentTimeWeight = currentWeight;
     this.ticketCount = tickets;
     this.currentCapacity = 0;
     this.maxCapacity = 0;
-    this.teachers = [];
-    
+    this.teachers = [];    
 }
 
 //Course class
@@ -42,10 +40,6 @@ var Teacher = function Teacher(name, assignedStudent) {
     this.assignedStudent = assignedStudent;
     this.courses = [];
     this.weight = 0; 
-    
-    function calculateWeight() {
-        this.courses.reduce();
-    }
 }
 
 /*********************************************************
@@ -63,7 +57,7 @@ function makeStudentsAndCourses() {
 
     //start student object array
     students = d3Dsv.csvParse(studentContents, function(data) {
-        return new Student(data.PrimResp, data.FullTimeWeight, data.TicketCount);
+        return new Student(data.PrimResp, data.LastWeight, data.CurrentWeight, data.TicketCount);
     });
     
     //start course object array
@@ -79,7 +73,7 @@ function makeStudentsAndCourses() {
     for (var i = 0; i < courses.length; i++) {
         for (var j = 0; j < courseRank.length; j++) {
             if (courses[i].name === courseRank[j].Course) {
-                courses[i].ticket = courseRank[j].Ticket_Count;
+                courses[i].tickets = courseRank[j].Ticket_Count;
             }
         }
         for (var k = 0; k < oldCourses.length; k++) {
@@ -140,15 +134,29 @@ function makeTeachers() {
 *********************************************************/
 function doMath() {
     
-    console.log(students[0].calculateCapacity());
-//won't need it's own file for now
-    //determine overall//average capacity and weight info
+    //determine student capacity
+    for (var i = 0; i < students.length; i++) {
+        if (students[i].currentTimeWeight < students[i].lastTimeWeight) {
+            students[i].maxCapacity = students[i].tickets / 2;
+        } else if (students[i].currentTimeWeight > students[i].lastTimeWeight) {
+            students[i].maxCapacity = students[i].tickets * 2;
+        } else {
+            students[i].maxCapacity = students[i].tickets;
+        }
+    }
+
+    //determines teacher weights
+    for (i = 0; i < teachers.length; i++) {
+        for (var j = 0; j < (teachers[i]).courses.length; j++) {
+            teachers[i].weight += (teachers[i].courses[j].sections * teachers[i].courses[j].tickets);
+
+        }
+    }
     
-    //loop calling students getCapacity function
+     for (i = 0; i < teachers.length; i++) {
+        console.log(teachers[i]);
+     }
     
-    //loop calling students teachers getWeightFunction
-    
-    //loop calling teachers getWeight function
 }
 
 /*********************************************************
