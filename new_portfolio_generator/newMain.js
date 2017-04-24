@@ -17,10 +17,25 @@ var Student = function Student(name, lastWeight, currentWeight, tickets) {
     this.name = name;
     this.lastTimeWeight = lastWeight;
     this.currentTimeWeight = currentWeight;
-    this.ticketCount = tickets;
+    this.tickets = tickets;
     this.currentCapacity = 0;
     this.maxCapacity = 0;
     this.teachers = [];    
+}
+
+Student.prototype.addTeacher = function(teacher) {
+    this.teachers.push(teacher);
+    this.currentCapacity += teacher.weight;
+}
+
+Student.prototype.calcCapacity = function() {
+    if (this.currentTimeWeight < this.lastTimeWeight) {
+        this.maxCapacity = this.tickets / 2;
+    } else if (this.currentTimeWeight > this.lastTimeWeight) {
+        this.maxCapacity = this.tickets * 2;
+    } else {
+        this.maxCapacity = this.tickets;
+    }
 }
 
 //Course class
@@ -30,7 +45,7 @@ var Course = function Course(name, teacher, sections, department /*optional*/ ) 
     this.teacher = teacher;
     this.sections = sections;
     this.assignedStudent = 0;
-    this.tickets = 0; 
+    this.tickets = 1; 
     this.assigned = false;
 }
 
@@ -40,6 +55,13 @@ var Teacher = function Teacher(name, assignedStudent) {
     this.assignedStudent = assignedStudent;
     this.courses = [];
     this.weight = 0; 
+}
+
+Teacher.prototype.calcWeight = function() { 
+    for (var j = 0; j < this.courses.length; j++) {
+        this.weight += (this.courses[j].sections * this.courses[j].tickets);
+    }
+    this.weight *= .2;
 }
 
 /*********************************************************
@@ -124,7 +146,6 @@ function makeTeachers() {
         }
         teachers.push(tempTeacher);
     }
-
 }
 
 /*********************************************************
@@ -136,45 +157,37 @@ function doMath() {
     
     //determine student capacity
     for (var i = 0; i < students.length; i++) {
-        if (students[i].currentTimeWeight < students[i].lastTimeWeight) {
-            students[i].maxCapacity = students[i].tickets / 2;
-        } else if (students[i].currentTimeWeight > students[i].lastTimeWeight) {
-            students[i].maxCapacity = students[i].tickets * 2;
-        } else {
-            students[i].maxCapacity = students[i].tickets;
-        }
+        students[i].calcCapacity();
     }
 
     //determines teacher weights
     for (i = 0; i < teachers.length; i++) {
-        for (var j = 0; j < (teachers[i]).courses.length; j++) {
-            teachers[i].weight += (teachers[i].courses[j].sections * teachers[i].courses[j].tickets);
-
-        }
+        teachers[i].calcWeight();
     }
     
-     for (i = 0; i < teachers.length; i++) {
-        console.log(teachers[i]);
-     }
-    
+    //console.log(teachers.length / students.length);
 }
 
 /*********************************************************
-* name: makeTeachers
+* name: trimOffExcess
 * desc: Technically makeStudents starts making the teachers 
 *       and this function finishes. Makes functioning 
 *       teacher objects array.
 *********************************************************/
 function trimOffExcess() {
-    //give students teachers
+    //give students last semester teachers
     for (var i = 0; i < students.length; i++) {
         for(var j = 0; j < teachers.length; j++) {
             if (students[i].name === teachers[j].assignedStudent) {
-                students[i].teachers.push(teachers[j]);
+                students[i].addTeacher(teachers[j]);
                 teachers.splice(j, 1);
                 j--;
             }
         }
+    }
+    
+    for (i = 0; i < students.length; i++) {
+        console.log(students[i]);
     }
 }
 
@@ -198,3 +211,4 @@ function write() {
 makeStudentsAndCourses();
 makeTeachers();
 doMath();
+trimOffExcess();
