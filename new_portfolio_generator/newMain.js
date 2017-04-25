@@ -23,6 +23,14 @@ var Student = function Student(name, lastWeight, currentWeight, tickets) {
     this.teachers = [];    
 }
 
+Student.prototype.calcRatio = function() {
+    var ratio = 0;
+    if (this.currentCapacity !== 0) {
+        ratio = this.maxCapacity/this.currentCapacity;
+    }
+    return ratio;
+}
+
 Student.prototype.addTeacher = function(teacher) {
     this.teachers.push(teacher);
     this.currentCapacity += teacher.weight;
@@ -61,7 +69,7 @@ Teacher.prototype.calcWeight = function() {
     for (var j = 0; j < this.courses.length; j++) {
         this.weight += (this.courses[j].sections * this.courses[j].tickets);
     }
-    this.weight *= .2;
+    this.weight *= .16;
 }
 
 /*********************************************************
@@ -168,6 +176,25 @@ function doMath() {
     //console.log(teachers.length / students.length);
 }
 
+//average ratio
+function calculateAvgRatio() {
+    var allRatios = 0;
+    var length = students.length;
+    for (var i = 0; i < students.length; i++) {
+        if (students[i].calcRatio() === 0) {
+            length -= 1;
+        } else if (students[i].calcRatio() > 0) {
+            allRatios += students[i].calcRatio();
+        } else {
+            console.log("bad things are happening");
+            console.log(students[i].calcRatio());
+            console.log(i);
+        }
+    }
+    console.log(allRatios/length);
+    console.log(students[5]);
+}
+
 /*********************************************************
 * name: trimOffExcess
 * desc: Technically makeStudents starts making the teachers 
@@ -175,9 +202,13 @@ function doMath() {
 *       teacher objects array.
 *********************************************************/
 function trimOffExcess() {
+    teachers.sort(function (a, b) {
+        return b.weight - a.weight;
+    });
+    
     //give students last semester teachers
     for (var i = 0; i < students.length; i++) {
-        for(var j = 0; j < teachers.length; j++) {
+        for (var j = 0; j < teachers.length; j++) {
             if (students[i].name === teachers[j].assignedStudent) {
                 students[i].addTeacher(teachers[j]);
                 teachers.splice(j, 1);
@@ -212,3 +243,4 @@ makeStudentsAndCourses();
 makeTeachers();
 doMath();
 trimOffExcess();
+//calculateAvgRatio();
