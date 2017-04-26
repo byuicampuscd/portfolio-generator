@@ -5,6 +5,10 @@
 var d3Dsv = require('d3-dsv');
 var fs = require('fs');
 
+//global variables - user chooses values
+var allowance = 2;
+var ratio = 0.16;
+
 //global variables
 var students = 0;
 var teachers =[];
@@ -12,6 +16,8 @@ var courseRank = 0;
 var courses = 0;
 var oldCourses = 0;
 
+
+    
 //Student class
 var Student = function Student(name, lastWeight, currentWeight, tickets) {
     this.name = name;
@@ -23,17 +29,17 @@ var Student = function Student(name, lastWeight, currentWeight, tickets) {
     this.teachers = [];    
 }
 
+Student.prototype.addTeacher = function(teacher) {
+    this.teachers.push(teacher);
+    this.currentCapacity += teacher.weight;
+}
+
 Student.prototype.calcRatio = function() {
     var ratio = 0;
     if (this.currentCapacity !== 0) {
         ratio = this.maxCapacity/this.currentCapacity;
     }
     return ratio;
-}
-
-Student.prototype.addTeacher = function(teacher) {
-    this.teachers.push(teacher);
-    this.currentCapacity += teacher.weight;
 }
 
 Student.prototype.calcCapacity = function() {
@@ -43,6 +49,24 @@ Student.prototype.calcCapacity = function() {
         this.maxCapacity = this.tickets * 2;
     } else {
         this.maxCapacity = this.tickets;
+    }
+}
+
+Student.prototype.getCapDif = function() {
+    return this.currentCapacity - this.maxCapacity;
+}
+
+Student.prototype.removeExcess = function() {
+    //console.log("is this working");
+    
+    //console.log(this.teachers.length);
+    for (var i = 0; i < this.teachers.length; i++) {
+        console.log(this.teachers[i].weight);
+        if (this.getCapDif() > (this.teachers[i].weight)) {
+            teachers.push(this.teachers[i]);
+            this.teachers.splice(i, 1);
+            console.log(this.teachers[i].weight);
+        }
     }
 }
 
@@ -69,7 +93,7 @@ Teacher.prototype.calcWeight = function() {
     for (var j = 0; j < this.courses.length; j++) {
         this.weight += (this.courses[j].sections * this.courses[j].tickets);
     }
-    this.weight *= .16;
+    //this.weight *= ratio;
 }
 
 /*********************************************************
@@ -218,8 +242,16 @@ function trimOffExcess() {
     }
     
     for (i = 0; i < students.length; i++) {
-        console.log(students[i]);
+        if (students[i].teachers.length && (students[i].getCapDif() > allowance)) {
+            students[i].removeExcess();
+        }
     }
+    
+    /*for (i = 0; i < students.length; i++) {  
+        for (j = 0; j < students[i].teachers.length; j++) {
+            console.log(students[i].teachers[j].weight);
+        }
+    }*/
 }
 
 /*********************************************************
