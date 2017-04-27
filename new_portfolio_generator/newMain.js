@@ -6,6 +6,7 @@ var d3Dsv = require('d3-dsv');
 var fs = require('fs');
 
 //global variables - user chooses values
+var newHireStartValue = 10;
 var allowance = 2;
 var ratio = 0.16;
 
@@ -57,15 +58,12 @@ Student.prototype.getCapDif = function() {
 }
 
 Student.prototype.removeExcess = function() {
-    //console.log("is this working");
-    
-    //console.log(this.teachers.length);
     for (var i = 0; i < this.teachers.length; i++) {
-        console.log(this.teachers[i].weight);
-        if (this.getCapDif() > (this.teachers[i].weight)) {
+        if (this.getCapDif() > this.teachers[i].weight) {
             teachers.push(this.teachers[i]);
+            this.currentCapacity -= this.teachers[i].weight;
             this.teachers.splice(i, 1);
-            console.log(this.teachers[i].weight);
+            i--;
         }
     }
 }
@@ -93,7 +91,7 @@ Teacher.prototype.calcWeight = function() {
     for (var j = 0; j < this.courses.length; j++) {
         this.weight += (this.courses[j].sections * this.courses[j].tickets);
     }
-    //this.weight *= ratio;
+    this.weight *= ratio;
 }
 
 /*********************************************************
@@ -165,7 +163,6 @@ function makeTeachers() {
             teacherList.push({"teacher": courses[i].teacher, "student": courses[i].assignedStudent});
         }
     }
-    
     //make teacher object array
     var tempTeacher = 0;
     for(i = 0; i < teacherList.length; i++) {
@@ -226,9 +223,10 @@ function calculateAvgRatio() {
 *       teacher objects array.
 *********************************************************/
 function trimOffExcess() {
+    //sort teachers from highest weight to lowest
     teachers.sort(function (a, b) {
         return b.weight - a.weight;
-    });
+    }); 
     
     //give students last semester teachers
     for (var i = 0; i < students.length; i++) {
@@ -241,17 +239,18 @@ function trimOffExcess() {
         }
     }
     
+    //console.log(teachers.length);
+    //trim off all teachers
     for (i = 0; i < students.length; i++) {
         if (students[i].teachers.length && (students[i].getCapDif() > allowance)) {
             students[i].removeExcess();
         }
     }
-    
-    /*for (i = 0; i < students.length; i++) {  
-        for (j = 0; j < students[i].teachers.length; j++) {
-            console.log(students[i].teachers[j].weight);
-        }
+    /*for (i = 0; i < students.length; i++) {
+        console.log(students[i]);
     }*/
+    
+    //console.log(teachers.length);
 }
 
 /*********************************************************
@@ -260,6 +259,18 @@ function trimOffExcess() {
 *       Makes teams somehow.
 *********************************************************/
 function assignRemaining() {
+    //sort teachers from highest weight to lowest
+    teachers.sort(function (a, b) {
+        return b.weight - a.weight;
+    }); 
+    
+    console.log(teachers);
+    
+    /*for (i = 0; i < students.length; i++) {
+        if (students[i].teachers.length && ((students[i].getCapDif() * -1) > allowance)) {
+            students[i].removeExcess();
+        }
+    }*/
     
 }
 
@@ -275,4 +286,5 @@ makeStudentsAndCourses();
 makeTeachers();
 doMath();
 trimOffExcess();
+assignRemaining();
 //calculateAvgRatio();
