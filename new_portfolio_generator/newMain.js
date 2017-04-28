@@ -8,7 +8,7 @@ var fs = require('fs');
 //global variables - user chooses values
 var newHireStartValue = 10;
 var allowance = 2;
-var ratio = 0.16;
+var ratio = .15;
 
 //global variables
 var students = 0;
@@ -24,10 +24,15 @@ var Student = function Student(name, lastWeight, currentWeight, tickets) {
     this.name = name;
     this.lastTimeWeight = lastWeight;
     this.currentTimeWeight = currentWeight;
-    this.tickets = tickets;
     this.currentCapacity = 0;
     this.maxCapacity = 0;
     this.teachers = [];    
+    
+    if (tickets) {
+         this.tickets = tickets;
+    } else {
+         this.tickets = newHireStartValue;
+    }
 }
 
 Student.prototype.addTeacher = function(teacher) {
@@ -54,12 +59,13 @@ Student.prototype.calcCapacity = function() {
 }
 
 Student.prototype.getCapDif = function() {
-    return this.currentCapacity - this.maxCapacity;
+    return this.maxCapacity - this.currentCapacity;
 }
 
 Student.prototype.removeExcess = function() {
     for (var i = 0; i < this.teachers.length; i++) {
-        if (this.getCapDif() > this.teachers[i].weight) {
+        if (this.teachers[i].weight > this.maxCapacity || 
+            (this.getCapDif() * -1) > this.teachers[i].weight) {
             teachers.push(this.teachers[i]);
             this.currentCapacity -= this.teachers[i].weight;
             this.teachers.splice(i, 1);
@@ -212,8 +218,6 @@ function calculateAvgRatio() {
             console.log(i);
         }
     }
-    console.log(allRatios/length);
-    console.log(students[5]);
 }
 
 /*********************************************************
@@ -238,19 +242,18 @@ function trimOffExcess() {
             }
         }
     }
-    
-    //console.log(teachers.length);
-    //trim off all teachers
-    for (i = 0; i < students.length; i++) {
-        if (students[i].teachers.length && (students[i].getCapDif() > allowance)) {
-            students[i].removeExcess();
-        }
-    }
     /*for (i = 0; i < students.length; i++) {
         console.log(students[i]);
     }*/
+
+    //trim off all teachers
+    for (i = 0; i < students.length; i++) {
+        if (students[i].teachers.length && ((students[i].getCapDif() * -1) > allowance)) {
+            students[i].removeExcess();
+        }
+    }
     
-    //console.log(teachers.length);
+    //console.log(students);
 }
 
 /*********************************************************
@@ -263,15 +266,29 @@ function assignRemaining() {
     teachers.sort(function (a, b) {
         return b.weight - a.weight;
     }); 
+
+    var found;
     
-    console.log(teachers);
+    students.sort(function (a, b) {
+        return b.getCapDif() - a.getCapDif();
+    }); 
     
-    /*for (i = 0; i < students.length; i++) {
-        if (students[i].teachers.length && ((students[i].getCapDif() * -1) > allowance)) {
-            students[i].removeExcess();
+    //fill students capacities
+    for (var i = 0; i < teachers.length; i++) {
+        
+        students.sort(function (a, b) {
+            return b.getCapDif() - a.getCapDif();
+        }); 
+    
+        for (var j = 0; j < students.length; j++) {
+            if (teachers[i].weight <= (students[j].getCapDif() + allowance)) {
+                students[i].addTeacher(teachers[i]);
+                teachers.splice(i, 1);
+                i--;
+            }
         }
-    }*/
-    
+    }
+    console.log(students);
 }
 
 /*********************************************************
