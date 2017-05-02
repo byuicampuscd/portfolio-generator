@@ -7,7 +7,7 @@ var fs = require('fs');
 
 //global variables - user chooses values
 var newHireStartValue = 10;
-var allowance = 2;
+var allowance = 0;
 var ratio = .15;
 
 //global variables
@@ -37,6 +37,7 @@ var Student = function Student(name, lastWeight, currentWeight, tickets) {
 
 Student.prototype.addTeacher = function(teacher) {
     this.teachers.push(teacher);
+    teacher.assignedStudent = this.name;
     this.currentCapacity += teacher.weight;
 }
 
@@ -56,6 +57,7 @@ Student.prototype.calcCapacity = function() {
     } else {
         this.maxCapacity = this.tickets;
     }
+    //this.maxCapacity += allowance;
 }
 
 Student.prototype.getCapDif = function() {
@@ -65,7 +67,7 @@ Student.prototype.getCapDif = function() {
 Student.prototype.removeExcess = function() {
     for (var i = 0; i < this.teachers.length; i++) {
         if (this.teachers[i].weight > this.maxCapacity || 
-            (this.getCapDif() * -1) > this.teachers[i].weight) {
+            (this.getCapDif() * -1) > (this.teachers[i].weight)) {
             teachers.push(this.teachers[i]);
             this.currentCapacity -= this.teachers[i].weight;
             this.teachers.splice(i, 1);
@@ -204,7 +206,7 @@ function doMath() {
 }
 
 //average ratio
-function calculateAvgRatio() {
+/*function calculateAvgRatio() {
     var allRatios = 0;
     var length = students.length;
     for (var i = 0; i < students.length; i++) {
@@ -218,7 +220,7 @@ function calculateAvgRatio() {
             console.log(i);
         }
     }
-}
+}*/
 
 /*********************************************************
 * name: trimOffExcess
@@ -242,17 +244,20 @@ function trimOffExcess() {
             }
         }
     }
-    /*for (i = 0; i < students.length; i++) {
-        console.log(students[i]);
-    }*/
-
-    //trim off all teachers
     for (i = 0; i < students.length; i++) {
-        if (students[i].teachers.length && ((students[i].getCapDif() * -1) > allowance)) {
+        console.log(students[i]);
+    }
+
+    //trim off minimum amount of teachers
+    for (i = 0; i < students.length; i++) {
+        if (students[i].teachers.length /*&& ((students[i].getCapDif() * -1) > allowance)*/) {
             students[i].removeExcess();
         }
     }
-    
+
+    for (i = 0; i < students.length; i++) {
+        console.log(students[i]);
+    }
     //console.log(students);
 }
 
@@ -266,29 +271,32 @@ function assignRemaining() {
     teachers.sort(function (a, b) {
         return b.weight - a.weight;
     }); 
-
-    var found;
-    
     students.sort(function (a, b) {
         return b.getCapDif() - a.getCapDif();
     }); 
+
+    var found;
     
     //fill students capacities
     for (var i = 0; i < teachers.length; i++) {
-        
         students.sort(function (a, b) {
-            return b.getCapDif() - a.getCapDif();
+        return b.getCapDif() - a.getCapDif();
         }); 
-    
-        for (var j = 0; j < students.length; j++) {
-            if (teachers[i].weight <= (students[j].getCapDif() + allowance)) {
-                students[i].addTeacher(teachers[i]);
-                teachers.splice(i, 1);
-                i--;
-            }
+        if (teachers[i].weight <= (students[0].getCapDif() + allowance)) {
+            students[0].addTeacher(teachers[i]);
+            teachers.splice(i, 1);
+            i--;
         }
     }
-    console.log(students);
+    students.sort(function (a, b) {
+    return b.getCapDif() - a.getCapDif();
+    }); 
+
+    for (i = 0; i < students.length; i++) {
+        console.log(students[i]);
+    }
+    //console.log(students);
+    //console.log(teachers);
 }
 
 /*********************************************************
