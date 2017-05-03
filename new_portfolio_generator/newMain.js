@@ -7,7 +7,7 @@ var fs = require('fs');
 
 //global variables - user chooses values
 var newHireStartValue = 10;
-var allowance = 0;
+var allowance = 5;
 var ratio = .15;
 
 //global variables
@@ -41,13 +41,13 @@ Student.prototype.addTeacher = function(teacher) {
     this.currentCapacity += teacher.weight;
 }
 
-Student.prototype.calcRatio = function() {
+/*Student.prototype.calcRatio = function() {
     var ratio = 0;
     if (this.currentCapacity !== 0) {
         ratio = this.maxCapacity/this.currentCapacity;
     }
     return ratio;
-}
+}*/
 
 Student.prototype.calcCapacity = function() {
     if (this.currentTimeWeight < this.lastTimeWeight) {
@@ -57,7 +57,6 @@ Student.prototype.calcCapacity = function() {
     } else {
         this.maxCapacity = this.tickets;
     }
-    //this.maxCapacity += allowance;
 }
 
 Student.prototype.getCapDif = function() {
@@ -67,7 +66,7 @@ Student.prototype.getCapDif = function() {
 Student.prototype.removeExcess = function() {
     for (var i = 0; i < this.teachers.length; i++) {
         if (this.teachers[i].weight > this.maxCapacity || 
-            (this.getCapDif() * -1) > (this.teachers[i].weight)) {
+            (this.getCapDif() * -1 + allowance) > (this.teachers[i].weight)) {
             teachers.push(this.teachers[i]);
             this.currentCapacity -= this.teachers[i].weight;
             this.teachers.splice(i, 1);
@@ -168,9 +167,11 @@ function makeTeachers() {
             }
         }
         if (add) {
-            teacherList.push({"teacher": courses[i].teacher, "student": courses[i].assignedStudent});
+            teacherList.push({"teacher": courses[i].teacher, 
+                              "student": courses[i].assignedStudent});
         }
     }
+    
     //make teacher object array
     var tempTeacher = 0;
     for(i = 0; i < teacherList.length; i++) {
@@ -201,11 +202,12 @@ function doMath() {
     for (i = 0; i < teachers.length; i++) {
         teachers[i].calcWeight();
     }
-    
-    //console.log(teachers.length / students.length);
 }
 
-//average ratio
+/*********************************************************
+* name: calculateAvgRatio
+* desc: Calculates overall average ratio.
+*********************************************************/
 /*function calculateAvgRatio() {
     var allRatios = 0;
     var length = students.length;
@@ -250,15 +252,10 @@ function trimOffExcess() {
 
     //trim off minimum amount of teachers
     for (i = 0; i < students.length; i++) {
-        if (students[i].teachers.length /*&& ((students[i].getCapDif() * -1) > allowance)*/) {
+        if (students[i].teachers.length && ((students[i].getCapDif() * -1) > allowance)) {
             students[i].removeExcess();
         }
     }
-
-    for (i = 0; i < students.length; i++) {
-        console.log(students[i]);
-    }
-    //console.log(students);
 }
 
 /*********************************************************
@@ -271,11 +268,6 @@ function assignRemaining() {
     teachers.sort(function (a, b) {
         return b.weight - a.weight;
     }); 
-    students.sort(function (a, b) {
-        return b.getCapDif() - a.getCapDif();
-    }); 
-
-    var found;
     
     //fill students capacities
     for (var i = 0; i < teachers.length; i++) {
@@ -291,20 +283,22 @@ function assignRemaining() {
     students.sort(function (a, b) {
     return b.getCapDif() - a.getCapDif();
     }); 
-
-    for (i = 0; i < students.length; i++) {
-        console.log(students[i]);
-    }
-    //console.log(students);
-    //console.log(teachers);
 }
 
 /*********************************************************
 * name: write
 * desc: Uses the students array and or teams to make CSV's
+*       - maybe - I don't really know. Right now this just
+*       outputs everything.
 *********************************************************/
 function write() {
+    //print out students
+    for (var i = 0; i < students.length; i++) {
+        console.log(students[i]);
+    }
     
+    //print out remaining teachers
+    console.log(teachers);
 }
 
 makeStudentsAndCourses();
@@ -312,4 +306,5 @@ makeTeachers();
 doMath();
 trimOffExcess();
 assignRemaining();
+write();
 //calculateAvgRatio();
