@@ -12,14 +12,13 @@ var ratio = .15;
 
 //global variables
 var students = 0;
-var teachers =[];
-var courseRank = 0;
 var courses = 0;
-var oldCourses = 0;
+var teachers =[];
 
-
-    
-//Student class
+/*********************************************************
+* name: Student class
+* desc: The implementation of the student class
+*********************************************************/
 var Student = function Student(name, lastWeight, currentWeight, tickets) {
     this.name = name;
     this.lastTimeWeight = lastWeight;
@@ -75,7 +74,10 @@ Student.prototype.removeExcess = function() {
     }
 }
 
-//Course class
+/*********************************************************
+* name: Course class
+* desc: The implementation of the course class
+*********************************************************/
 var Course = function Course(name, teacher, sections, department /*optional*/ ) {   
     this.name = name;
     if (department) this.department = department;
@@ -83,10 +85,13 @@ var Course = function Course(name, teacher, sections, department /*optional*/ ) 
     this.sections = sections;
     this.assignedStudent = 0;
     this.tickets = 1; 
-    this.assigned = false;
+    //this.assigned = false;
 }
 
-//Teacher class
+/*********************************************************
+* name: Teacher class
+* desc: The implementation of the teacher class
+*********************************************************/
 var Teacher = function Teacher(name, assignedStudent) {
     this.name = name;
     this.assignedStudent = assignedStudent;
@@ -108,6 +113,10 @@ Teacher.prototype.calcWeight = function() {
 *       updates courses to have its needed data
 *********************************************************/
 function makeStudentsAndCourses() {
+    
+    var oldCourses = 0;
+    var courseRank = 0;
+    
     //read files
     var studentContents = fs.readFileSync('\Test_CSV/\/Student Rank (Sept 30).csv').toString();
     var courseRankContents = fs.readFileSync('\Test_CSV/\/Course Rank.csv').toString();
@@ -161,8 +170,7 @@ function makeTeachers() {
     for (var i = 0; i < courses.length; i++) {
         add = true;
         for (var j = i + 1; j < courses.length; j++) {
-            if (courses[i].teacher === courses[j].teacher && 
-                courses[i].assignedStudent === courses[j].assignedStudent) {
+            if (courses[i].teacher === courses[j].teacher) {
                 add = false;
             }
         }
@@ -177,13 +185,25 @@ function makeTeachers() {
     for(i = 0; i < teacherList.length; i++) {
         tempTeacher = new Teacher(teacherList[i].teacher, teacherList[i].student);
         for(j = 0; j < courses.length; j++) {
-            if(teacherList[i].teacher === courses[j].teacher && 
-                teacherList[i].student === courses[j].assignedStudent) {
+            if(teacherList[i].teacher === courses[j].teacher) {
                 tempTeacher.courses.push(courses[j]);
             }
         }
         teachers.push(tempTeacher);
     }
+    /*var tempTeacher = 0;
+    for (var i = 0; i < courses.length; i++) {
+        tempTeacher = new Teacher(courses[i].teacher, courses[i].assignedStudent);
+        for (var j = i; j < courses.length; j++) {
+            if (tempTeacher.name === courses[j].teacher) {
+                tempTeacher.courses.push(courses[j]);
+                courses.splice(j, 1);
+                j--;
+            }
+        }
+        teachers.push(tempTeacher);
+    }   */
+    console.log(teachers.length);
 }
 
 /*********************************************************
@@ -202,6 +222,11 @@ function doMath() {
     for (i = 0; i < teachers.length; i++) {
         teachers[i].calcWeight();
     }
+    
+    for (i = 0; i < teachers.length; i++) {
+        console.log(teachers[i]);
+    }
+    
 }
 
 /*********************************************************
@@ -245,9 +270,6 @@ function trimOffExcess() {
                 j--;
             }
         }
-    }
-    for (i = 0; i < students.length; i++) {
-        console.log(students[i]);
     }
 
     //trim off minimum amount of teachers
@@ -306,5 +328,5 @@ makeTeachers();
 doMath();
 trimOffExcess();
 assignRemaining();
-write();
+//write();
 //calculateAvgRatio();
