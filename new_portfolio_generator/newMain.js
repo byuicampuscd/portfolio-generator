@@ -7,7 +7,7 @@ var fs = require('fs');
 
 //global variables - user chooses values
 var newHireStartValue = 10;
-var allowance = 5;
+var allowance = 3;
 var ratio = .15;
 
 //global variables
@@ -164,7 +164,7 @@ function makeStudentsAndCourses() {
 **********************************************************/
 function makeTeachers() {
     
-    //make array of teacher names including broken teachers
+    //make array of teacher names fixing broken teachers
     var teacherList = [];
     var add = true;
     for (var i = 0; i < courses.length; i++) {
@@ -191,18 +191,7 @@ function makeTeachers() {
         }
         teachers.push(tempTeacher);
     }
-    /*var tempTeacher = 0;
-    for (var i = 0; i < courses.length; i++) {
-        tempTeacher = new Teacher(courses[i].teacher, courses[i].assignedStudent);
-        for (var j = i; j < courses.length; j++) {
-            if (tempTeacher.name === courses[j].teacher) {
-                tempTeacher.courses.push(courses[j]);
-                courses.splice(j, 1);
-                j--;
-            }
-        }
-        teachers.push(tempTeacher);
-    }   */
+
     console.log(teachers.length);
 }
 
@@ -221,10 +210,6 @@ function doMath() {
     //determines teacher weights
     for (i = 0; i < teachers.length; i++) {
         teachers[i].calcWeight();
-    }
-    
-    for (i = 0; i < teachers.length; i++) {
-        console.log(teachers[i]);
     }
     
 }
@@ -328,5 +313,5 @@ makeTeachers();
 doMath();
 trimOffExcess();
 assignRemaining();
-//write();
+write();
 //calculateAvgRatio();
