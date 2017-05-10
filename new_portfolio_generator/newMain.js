@@ -40,6 +40,13 @@ Student.prototype.addTeacher = function(teacher) {
     this.currentCapacity += teacher.weight;
 }
 
+Student.prototype.breakTeacher = function() {
+    var brokenTeacher = new Teacher(this.name, this.assignedStudent);
+    for (var i = 0; i < (this.courses.length / 2); i++) {
+        
+    }
+}
+
 /*Student.prototype.calcRatio = function() {
     var ratio = 0;
     if (this.currentCapacity !== 0) {
