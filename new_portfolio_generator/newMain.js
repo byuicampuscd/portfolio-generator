@@ -40,13 +40,6 @@ Student.prototype.addTeacher = function(teacher) {
     this.currentCapacity += teacher.weight;
 }
 
-Student.prototype.breakTeacher = function() {
-    var brokenTeacher = new Teacher(this.name, this.assignedStudent);
-    for (var i = 0; i < (this.courses.length / 2); i++) {
-        
-    }
-}
-
 /*Student.prototype.calcRatio = function() {
     var ratio = 0;
     if (this.currentCapacity !== 0) {
@@ -95,6 +88,10 @@ var Course = function Course(name, teacher, sections, department /*optional*/ ) 
     //this.assigned = false;
 }
 
+Course.prototype.getCourseWeight = function() {
+    return this.tickets * this.sections;
+}
+
 /*********************************************************
 * name: Teacher class
 * desc: The implementation of the teacher class
@@ -111,6 +108,31 @@ Teacher.prototype.calcWeight = function() {
         this.weight += (this.courses[j].sections * this.courses[j].tickets);
     }
     this.weight *= ratio;
+}
+
+//working working working
+Teacher.prototype.breakTeacher = function() {
+    this.courses.sort(function (a, b) {
+        return b.getCourseWeight() - a.getCourseWeight();
+    }); 
+    
+    var brokenTeacher = new Teacher(this.name, this.assignedStudent);
+    var brokenWeight = this.weight / 2;
+    console.log("working");
+    console.log(this.courses.length);
+    for (var i = 0; i < this.courses.length; i++) {
+        console.log(brokenWeight);
+        console.log(brokenWeight + ">" + (this.courses[i].getCourseWeight()));
+        if (brokenWeight > this.courses[i].getCourseWeight()) {
+            console.log("inside loop");
+            console.log("inside bw " + brokenWeight);
+            brokenWeight -= this.courses[i].getCourseWeight();
+            this.weight -= this.courses[i].getCourseWeight();
+            brokenTeacher.courses.push(this.courses[i]);
+            this.courses.splice(i, 1);   
+        } 
+    }
+    teachers.push(brokenTeacher);
 }
 
 /*********************************************************
@@ -282,21 +304,33 @@ function assignRemaining() {
     teachers.sort(function (a, b) {
         return b.weight - a.weight;
     }); 
+    students.sort(function (a, b) {
+        return b.getCapDif() - a.getCapDif();
+    }); 
+    
+    /*var go = true;
+    for (var i = 0; go; i++) {
+        if (teachers[i].weight < students[0].capacity) {
+            go = false;
+        } else {
+            teachers[i].breakTeacher();
+            teachers.sort(function (a, b) {
+                return b.weight - a.weight;
+            }); 
+        }
+    }*/
     
     //fill students capacities
     for (var i = 0; i < teachers.length; i++) {
-        students.sort(function (a, b) {
-        return b.getCapDif() - a.getCapDif();
-        }); 
         if (teachers[i].weight <= (students[0].getCapDif() + allowance)) {
             students[0].addTeacher(teachers[i]);
             teachers.splice(i, 1);
             i--;
         }
+        students.sort(function (a, b) {
+            return b.getCapDif() - a.getCapDif();
+        }); 
     }
-    students.sort(function (a, b) {
-    return b.getCapDif() - a.getCapDif();
-    }); 
 }
 
 /*********************************************************
@@ -321,4 +355,7 @@ doMath();
 trimOffExcess();
 assignRemaining();
 write();
+console.log(teachers[6]);
+teachers[6].breakTeacher();
+console.log(teachers[6]);
 //calculateAvgRatio();
