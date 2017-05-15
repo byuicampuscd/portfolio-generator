@@ -112,27 +112,24 @@ Teacher.prototype.calcWeight = function() {
 
 //working working working
 Teacher.prototype.breakTeacher = function() {
-    this.courses.sort(function (a, b) {
-        return b.getCourseWeight() - a.getCourseWeight();
-    }); 
-    
-    var brokenTeacher = new Teacher(this.name, this.assignedStudent);
-    var brokenWeight = this.weight / 2;
-    console.log("working");
-    console.log(this.courses.length);
-    for (var i = 0; i < this.courses.length; i++) {
-        console.log(brokenWeight);
-        console.log(brokenWeight + ">" + (this.courses[i].getCourseWeight()));
-        if (brokenWeight > this.courses[i].getCourseWeight()) {
-            console.log("inside loop");
-            console.log("inside bw " + brokenWeight);
-            brokenWeight -= this.courses[i].getCourseWeight();
-            this.weight -= this.courses[i].getCourseWeight();
-            brokenTeacher.courses.push(this.courses[i]);
-            this.courses.splice(i, 1);   
-        } 
+    if (this.courses.length > 1) {
+        this.courses.sort(function (a, b) {
+            return b.getCourseWeight() - a.getCourseWeight();
+        }); 
+
+        var brokenTeacher = new Teacher(this.name, this.assignedStudent);
+        var brokenWeight = this.weight / 2;
+        for (var i = 0; i < this.courses.length; i++) {
+            if (brokenWeight > (this.courses[i].getCourseWeight() * ratio)) {
+                brokenWeight -= (this.courses[i].getCourseWeight() * ratio);
+                this.weight -= (this.courses[i].getCourseWeight() * ratio);
+                brokenTeacher.courses.push(this.courses[i]);
+                this.courses.splice(i, 1);   
+            } 
+        }
+        brokenTeacher.calcWeight();
+        teachers.push(brokenTeacher);
     }
-    teachers.push(brokenTeacher);
 }
 
 /*********************************************************
@@ -274,6 +271,20 @@ function trimOffExcess() {
     teachers.sort(function (a, b) {
         return b.weight - a.weight;
     }); 
+    students.sort(function (a, b) {
+        return b.getCapDif() - a.getCapDif();
+    }); 
+    
+    console.log(teachers);
+
+    for (i = 0; teachers[i].weight > students[0].maxCapacity; i++) {
+        teachers[i].breakTeacher();
+        teachers.sort(function (a, b) {
+            return b.weight - a.weight;
+        }); 
+    }
+    console.log(students[0]);
+    console.log(teachers);
     
     //give students last semester teachers
     for (var i = 0; i < students.length; i++) {
@@ -307,18 +318,6 @@ function assignRemaining() {
     students.sort(function (a, b) {
         return b.getCapDif() - a.getCapDif();
     }); 
-    
-    /*var go = true;
-    for (var i = 0; go; i++) {
-        if (teachers[i].weight < students[0].capacity) {
-            go = false;
-        } else {
-            teachers[i].breakTeacher();
-            teachers.sort(function (a, b) {
-                return b.weight - a.weight;
-            }); 
-        }
-    }*/
     
     //fill students capacities
     for (var i = 0; i < teachers.length; i++) {
@@ -354,8 +353,9 @@ makeTeachers();
 doMath();
 trimOffExcess();
 assignRemaining();
-write();
-console.log(teachers[6]);
-teachers[6].breakTeacher();
-console.log(teachers[6]);
+//write();
+//console.log(teachers[6]);
+//teachers[6].breakTeacher();
+//onsole.log(teachers[6]);
+//console.log(teachers);
 //calculateAvgRatio();
