@@ -89,7 +89,7 @@ var Course = function Course(name, teacher, sections, department /*optional*/ ) 
 }
 
 Course.prototype.getCourseWeight = function() {
-    return this.tickets * this.sections;
+    return this.tickets * this.sections * ratio;
 }
 
 /*********************************************************
@@ -118,11 +118,12 @@ Teacher.prototype.breakTeacher = function() {
         }); 
 
         var brokenTeacher = new Teacher(this.name, this.assignedStudent);
-        var brokenWeight = this.weight / 2;
+        var brokenWeight;
         for (var i = 0; i < this.courses.length; i++) {
-            if (brokenWeight > (this.courses[i].getCourseWeight() * ratio)) {
-                brokenWeight -= (this.courses[i].getCourseWeight() * ratio);
-                this.weight -= (this.courses[i].getCourseWeight() * ratio);
+            brokenWeight = this.weight / 2;
+            console.log(brokenWeight + ">" + this.courses[i].getCourseWeight());
+            if (brokenWeight > this.courses[i].getCourseWeight()) {
+                this.weight -= this.courses[i].getCourseWeight();
                 brokenTeacher.courses.push(this.courses[i]);
                 this.courses.splice(i, 1);   
             } 
