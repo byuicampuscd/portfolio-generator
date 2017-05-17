@@ -7,7 +7,7 @@ var fs = require('fs');
 
 //global variables - user chooses values
 var newHireStartValue = 10;
-var allowance = 3;
+var allowance = 1;
 var ratio = .15;
 
 //global variables
@@ -121,7 +121,7 @@ Teacher.prototype.breakTeacher = function() {
         var brokenWeight;
         for (var i = 0; i < this.courses.length; i++) {
             brokenWeight = this.weight / 2;
-            console.log(brokenWeight + ">" + this.courses[i].getCourseWeight());
+            //console.log(brokenWeight + ">" + this.courses[i].getCourseWeight());
             if (brokenWeight > this.courses[i].getCourseWeight()) {
                 this.weight -= this.courses[i].getCourseWeight();
                 brokenTeacher.courses.push(this.courses[i]);
@@ -219,7 +219,7 @@ function makeTeachers() {
         teachers.push(tempTeacher);
     }
 
-    console.log(teachers.length);
+    //console.log(teachers.length);
 }
 
 /*********************************************************
@@ -276,16 +276,13 @@ function trimOffExcess() {
         return b.getCapDif() - a.getCapDif();
     }); 
     
-    console.log(teachers);
-
+    //break teachers that are too big
     for (i = 0; teachers[i].weight > students[0].maxCapacity; i++) {
         teachers[i].breakTeacher();
         teachers.sort(function (a, b) {
             return b.weight - a.weight;
         }); 
     }
-    console.log(students[0]);
-    console.log(teachers);
     
     //give students last semester teachers
     for (var i = 0; i < students.length; i++) {
@@ -354,9 +351,6 @@ makeTeachers();
 doMath();
 trimOffExcess();
 assignRemaining();
-//write();
-//console.log(teachers[6]);
-//teachers[6].breakTeacher();
-//onsole.log(teachers[6]);
-//console.log(teachers);
+write();
+
 //calculateAvgRatio();
