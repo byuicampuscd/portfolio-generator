@@ -11,7 +11,11 @@
     "url": "https://github.com/byuitechops/portfolio-generator"
   },
   "author": "Greer Galloway",
-  "contributers": "Eric Julander",
+  "contributers": [{
+    "name":"Eric Julander"
+  }, {
+    "name": "Andrew Gremlich"
+  }],
   "license": "MIT",
   "devDependencies": {
     "babel-preset-es2015": "^6.9.0",
